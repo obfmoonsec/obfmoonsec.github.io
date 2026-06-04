@@ -3,40 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bức thư của Mạnh Dũng</title>
+    <title>Bức thư tình</title>
     <style>
         body {
             margin: 0;
-            background-color: #fff0f5;
+            background-color: #fce4ec;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: sans-serif;
-            /* Tạo khoảng cách tổng thể cho toàn bộ trang */
-            padding: 20px; 
-            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            background-image: radial-gradient(#f8bbd0 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
-        .envelope {
+        .card {
             background: white;
-            /* Dùng % để khung luôn thoáng so với mép màn hình */
-            width: 90%; 
-            max-width: 450px;
-            /* Chiều cao cố định nhưng vẫn cho phép nội dung cuộn */
-            height: 75vh; 
-            min-height: 400px;
-            padding: 25px;
+            /* Dùng % và vh để khung luôn vừa vặn trên mọi đt */
+            width: 90vw; 
+            max-width: 400px;
+            height: 70vh; 
+            max-height: 500px;
+            padding: 20px;
             border-radius: 25px;
             border: 3px solid #ff80ab;
-            box-shadow: 0 15px 35px rgba(255, 128, 171, 0.4);
+            box-shadow: 0 10px 30px rgba(255, 128, 171, 0.4);
             display: flex;
             flex-direction: column;
-            /* Đảm bảo viền khung không chạm sát nội dung */
-            box-sizing: border-box; 
+            position: relative;
+            z-index: 10;
+            box-sizing: border-box; /* Quan trọng: khung không bị phình to */
         }
 
-        h2 { color: #d63384; text-align: center; font-size: 22px; margin-bottom: 20px; }
+        .corner { position: absolute; font-size: 24px; z-index: 2; }
+        .top-left { top: -10px; left: -10px; }
+        .top-right { top: -10px; right: -10px; }
+        .bottom-left { bottom: -10px; left: -10px; }
+        .bottom-right { bottom: -10px; right: -10px; }
+
+        h2 { color: #d81b60; margin: 0 0 15px 0; font-size: 20px; text-align: center; }
         
         #scroll-container {
             flex-grow: 1;
@@ -44,37 +50,76 @@
             padding-right: 5px;
         }
 
-        #text { 
-            color: #881337; 
-            line-height: 1.8; 
-            font-size: 17px;
-            white-space: pre-wrap;
+        #text { color: #880e4f; font-size: 16px; font-style: italic; line-height: 1.7; white-space: pre-wrap; }
+
+        .from { color: #c2185b; font-weight: bold; text-align: right; border-top: 1px dashed #ff80ab; padding-top: 10px; margin-top: 10px; }
+
+        .player { background: #fce4ec; padding: 10px; border-radius: 15px; display: flex; align-items: center; gap: 10px; border: 1px solid #ff80ab; margin-top: 10px; }
+        .play-icon { width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 10px solid #d81b60; }
+        .bar { flex-grow: 1; height: 4px; background: #ff80ab; border-radius: 2px; }
+
+        .falling-item {
+            position: absolute;
+            bottom: -50px;
+            z-index: 1;
+            pointer-events: none;
+            animation: flyUp 6s linear infinite;
+        }
+        @keyframes flyUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="envelope">
+    <div class="card">
+        <div class="corner top-left">🌸</div>
+        <div class="corner top-right">🌸</div>
+        <div class="corner bottom-left">🌸</div>
+        <div class="corner bottom-right">🌸</div>
+
         <h2>Gửi Người Con Gái Anh Yêu 🌸</h2>
         <div id="scroll-container">
             <div id="text"></div>
         </div>
-        <div style="text-align: right; font-weight: bold; color: #d63384; margin-top: 15px; border-top: 1px solid #ffc0cb; padding-top: 10px;">Từ: Mạnh Dũng</div>
+        <div class="from">Từ: Mạnh Dũng</div>
+
+        <div class="player">
+            <div class="play-icon"></div>
+            <div class="bar"></div>
+            <span style="font-size: 11px; color: #d81b60;">-00:00</span>
+        </div>
     </div>
 
     <script>
         const fullText = "Oaaaaaaa, helo ebe>< \n\nCaptainboy bay tới dayyyy nè! Ebe của Cap đang làm gì zaa? Có nhớ Cap hong rứa? \n\nGiữa những bộn bề, Cap chỉ muốn gói ghém tất cả yêu thương vào đây gửi đến Cừu. Mỗi ngày trôi qua, được trò chuyện cùng em là điều khiến Cap thấy hạnh phúc nhất. \n\nĐừng quên ăn uống đầy đủ và giữ gìn sức khỏe nha. Dù có chuyện gì, Cap vẫn luôn ở đây bên cạnh em. Cừu mãi là Cừu nhỏ đáng yêu nhất của Cap! ❤️";
         
         const textElement = document.getElementById("text");
+        const container = document.getElementById("scroll-container");
         let i = 0;
 
         function typeWriter() {
             if (i < fullText.length) {
                 textElement.textContent += fullText.charAt(i);
+                container.scrollTop = container.scrollHeight;
                 i++;
-                setTimeout(typeWriter, 50);
+                setTimeout(typeWriter, 50); 
             }
         }
+
+        function createFallingItem() {
+            const item = document.createElement("div");
+            item.className = "falling-item";
+            item.innerHTML = Math.random() > 0.5 ? "💖" : "🌸";
+            item.style.left = Math.random() * 100 + "vw";
+            item.style.fontSize = (Math.random() * 15 + 10) + "px";
+            item.style.animationDuration = (Math.random() * 3 + 4) + "s";
+            document.body.appendChild(item);
+            setTimeout(() => item.remove(), 7000);
+        }
+
+        setInterval(createFallingItem, 800);
         window.onload = typeWriter;
     </script>
 </body>
