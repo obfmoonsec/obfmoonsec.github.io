@@ -2,107 +2,80 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gửi Cừu Nhỏ</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body { margin: 0; background-color: #ffeef2; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+        body { 
+            margin: 0; 
+            background: linear-gradient(180deg, #fff0f5 0%, #ffcce0 100%); 
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            font-family: sans-serif; overflow: hidden; position: relative;
+        }
 
-        /* Khung thư */
-        .envelope { background: white; width: 350px; height: 350px; padding: 25px; border-radius: 20px; border: 2px solid #ff80ab; box-shadow: 0 5px 15px rgba(255, 128, 171, 0.4); display: flex; flex-direction: column; position: relative; z-index: 2; box-sizing: border-box; background-image: url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'); background-position: -5px -5px, calc(100% + 5px) -5px, -5px calc(100% + 5px), calc(100% + 5px) calc(100% + 5px); background-repeat: no-repeat; background-size: 30px; }
-        h2 { color: #d63384; text-align: center; font-size: 18px; margin: 0 0 15px 0; }
-        
-        #scroll-container { flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; scroll-behavior: smooth; }
-        #text { color: #881337; line-height: 1.5; font-size: 15px; white-space: pre-wrap; }
-        
-        .footer-area { border-top: 1px dashed #ff80ab; padding-top: 10px; }
-        .signature { text-align: right; font-weight: bold; color: #d63384; font-size: 14px; }
-        .music-bar { margin-top: 8px; color: #d63384; font-size: 12px; }
+        /* Phong bì */
+        .envelope {
+            width: 250px; height: 160px; background: #ff80ab;
+            position: relative; border-radius: 8px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 30px rgba(255, 128, 171, 0.5);
+            transition: 0.5s; z-index: 10; /* Đưa phong bì lên cao nhất */
+        }
+        .envelope:hover { transform: scale(1.05); }
 
-        /* Hiệu ứng kết thúc */
-        #heart-center { position: fixed; font-size: 100px; z-index: 99; opacity: 0; transition: opacity 2s ease-in; filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.8)); pointer-events: none; }
-        .heart-beat { animation: heartbeat 1.2s ease-in-out infinite; }
-        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 25% { transform: scale(1.2); } }
+        .envelope::after {
+            content: ''; position: absolute; top: 0; left: 0;
+            border-left: 125px solid transparent; border-right: 125px solid transparent;
+            border-top: 90px solid #ff5a92; transform-origin: top; transition: 0.5s;
+        }
 
-        #love-text { position: fixed; z-index: 100; font-size: 50px; color: #d63384; font-weight: bold; opacity: 0; pointer-events: none; }
-        .grow-fade { animation: growAndFade 3s ease-out forwards; }
-        @keyframes growAndFade { 0% { transform: scale(0.5); opacity: 0; } 50% { transform: scale(1.5); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+        .opened .envelope::after { transform: rotateX(180deg); }
+        .opened .letter { top: -180px; opacity: 1; z-index: 1; }
 
-        .falling-item { position: absolute; top: -50px; z-index: 1; animation: fall linear forwards; }
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+        .letter {
+            position: absolute; width: 220px; height: 130px; background: white;
+            top: 0; transition: 0.5s; opacity: 0; z-index: -1;
+            padding: 20px; text-align: center; color: #d63384; font-size: 1.2rem;
+            border: 1px solid #eee; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Hiệu ứng rơi toàn màn hình */
+        .decor { 
+            position: absolute; font-size: 20px; z-index: 1; 
+            animation: fall linear infinite; pointer-events: none;
+            top: -20px; /* Bắt đầu từ trên đỉnh */
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        .clouds { position: absolute; bottom: 0; width: 100%; height: 150px; background: #ff9fb3; border-radius: 50% 50% 0 0; z-index: 5; }
     </style>
 </head>
 <body>
 
-    <div class="envelope" id="letter">
-        <h2>Gửi Người Con Gái Anh Yêu 🌸</h2>
-        <div id="scroll-container"><div id="text"></div></div>
-        <div class="footer-area">
-            <div class="signature">Từ: Mạnh Dũng</div>
-            <div class="music-bar">▶️ ──────────────────── -00:00</div>
-        </div>
+    <div class="envelope" id="env" onclick="this.classList.toggle('opened')">
+        <div class="letter">Gửi người con gái anh yêu... 💌</div>
     </div>
 
-    <div id="heart-center">❤️</div>
-    <div id="love-text">Yêu em!</div>
+    <div class="clouds"></div>
 
     <script>
-        const fullText = "Captainboy bay tới dayyyy nè! Ebe của Cap đang làm gì zaa? Có nhớ Cap hong rứa?\n\nGiữa những bộn bề, Cap chỉ muốn gói ghém tất cả yêu thương vào đây gửi đến Cừu. Mỗi ngày trôi qua, được trò chuyện cùng em là điều khiến Cap thấy hạnh phúc nhất.\n\nĐừng quên ăn uống đầy đủ và giữ gìn sức khỏe nha. Dù có chuyện gì, Cap vẫn luôn ở đây bên cạnh em. Cừu mãi là Cừu nhỏ đáng yêu nhất của Cap! ❤️";
-        
-        window.onload = () => {
-            typeWriter();
-            setInterval(createFallingItem, 500);
-        };
-
-        let i = 0;
-        function typeWriter() {
-            if (i < fullText.length) {
-                const textElem = document.getElementById("text");
-                textElem.textContent += fullText.charAt(i);
-                
-                // Tự động cuộn
-                const container = document.getElementById("scroll-container");
-                container.scrollTop = container.scrollHeight;
-                
-                i++;
-                setTimeout(typeWriter, 40);
-            } else {
-                startFinale();
+        function createDecor() {
+            const symbols = ['🌸', '❤️', '✨'];
+            // Tăng số lượng và dàn trải khắp màn hình
+            for (let i = 0; i < 20; i++) {
+                const div = document.createElement('div');
+                div.className = 'decor';
+                div.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                // Phủ toàn bộ chiều ngang màn hình
+                div.style.left = Math.random() * 100 + 'vw';
+                // Thời gian trễ ngẫu nhiên để rơi so le
+                div.style.animationDelay = Math.random() * 5 + 's';
+                div.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                div.style.opacity = Math.random() * 0.6 + 0.2;
+                document.body.appendChild(div);
             }
         }
-
-        function startFinale() {
-            const heart = document.getElementById("heart-center");
-            heart.style.opacity = "1";
-            heart.classList.add("heart-beat");
-            
-            setTimeout(() => {
-                heart.style.display = "none";
-                document.getElementById("love-text").classList.add("grow-fade");
-                triggerFireworks();
-            }, 3000);
-        }
-
-        function triggerFireworks() {
-            const end = Date.now() + 3000;
-            const colors = ['#ff4d4d', '#ff94c2', '#ffccd5'];
-            (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: colors, shapes: ['heart'] });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: colors, shapes: ['heart'] });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
-        }
-
-        function createFallingItem() {
-            const item = document.createElement("div");
-            item.className = "falling-item";
-            item.innerHTML = Math.random() > 0.5 ? "💖" : "🌸";
-            item.style.left = Math.random() * 100 + "vw";
-            item.style.fontSize = (Math.random() * 15 + 10) + "px";
-            item.style.animationDuration = (Math.random() * 3 + 4) + "s";
-            document.body.appendChild(item);
-            setTimeout(() => item.remove(), 7000);
-        }
+        createDecor();
     </script>
 </body>
 </html>
