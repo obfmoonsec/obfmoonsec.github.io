@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bức thư gửi Cừu nhỏ</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #fff0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        .envelope {
+            background: white;
+            width: 350px;
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #ffb6c1;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.6);
+            text-align: left;
+            z-index: 2;
+        }
+
+        h2 { color: #d63384; text-align: center; font-family: cursive; }
+        
+        #text { 
+            color: #881337; 
+            line-height: 1.8; 
+            font-size: 16px; 
+            white-space: pre-wrap; /* Quan trọng để giữ xuống dòng */
+            display: inline;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 16px;
+            background-color: #d63384;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .from { 
+            color: #d63384; 
+            font-weight: bold; 
+            margin-top: 30px; 
+            text-align: right;
+            opacity: 0; 
+            transition: opacity 2s; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="envelope">
+        <h2>Gửi Cừu nhỏ 🐑</h2>
+        <div id="text"></div><span class="cursor"></span>
+        <div id="signature" class="from">Từ: Cặp của Cừu</div>
+    </div>
+
+    <script>
+        // Bạn có thể viết đoạn văn dài ở đây, dùng \n để xuống dòng
+        const fullText = "Oaaaaaaa, helo ebe>< \n\nCaptainboy bay tới dayyyy nè! Ebe của Cap đang làm gì zaa? Có nhớ Cap hong rứa? \n\nGiữa những bộn bề, Cap chỉ muốn gửi đến Cừu nhỏ những lời nhắn nhủ ngọt ngào nhất. Hy vọng mỗi khi mở bức thư này lên, Cừu sẽ thấy vui và ấm áp hơn. Cừu mãi là Cừu nhỏ đáng yêu nhất của Cap nhé!";
+        
+        const textElement = document.getElementById("text");
+        const signature = document.getElementById("signature");
+        let i = 0;
+
+        function typeWriter() {
+            if (i < fullText.length) {
+                textElement.textContent += fullText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50); // Tốc độ gõ
+            } else {
+                document.querySelector(".cursor").style.display = "none";
+                signature.style.opacity = "1";
+            }
+        }
+
+        window.onload = typeWriter;
+    </script>
+</body>
+</html>
