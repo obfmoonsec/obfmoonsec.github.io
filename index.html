@@ -7,25 +7,23 @@
     <style>
         body {
             margin: 0;
-            background-color: #fff0f5; /* Màu nền hồng nhạt */
+            background-color: #fff0f5;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh; /* Cố định chiều cao toàn màn hình */
             font-family: 'Segoe UI', sans-serif;
-            padding: 15px;
+            padding: 10px;
             box-sizing: border-box;
         }
 
         .envelope {
             background: white;
-            width: 100%;
-            max-width: 450px;
-            /* Tự co giãn theo nội dung, không bị nhỏ */
-            height: auto; 
-            min-height: 400px;
-            max-height: 85vh; 
-            padding: 30px;
+            /* Cố định kích thước khung */
+            width: 90%; 
+            max-width: 400px;
+            height: 500px; /* Khung thư có chiều cao cố định */
+            padding: 25px;
             border-radius: 25px;
             border: 3px solid #ff80ab;
             box-shadow: 0 10px 25px rgba(255, 128, 171, 0.4);
@@ -38,20 +36,20 @@
         h2 { 
             color: #d63384; 
             text-align: center; 
-            font-size: 22px; 
-            margin: 0 0 20px 0; 
+            font-size: 20px; 
+            margin: 0 0 15px 0; 
         }
         
         #scroll-container {
             flex-grow: 1;
-            overflow-y: auto; /* Thanh cuộn xuất hiện khi chữ dài */
+            overflow-y: auto; /* Tạo thanh cuộn cố định trong khung */
             padding-right: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         #text { 
             color: #881337; 
-            line-height: 1.8; 
+            line-height: 1.6; 
             font-size: 17px;
             white-space: pre-wrap;
         }
@@ -62,9 +60,9 @@
             color: #d63384; 
             border-top: 1px dashed #ffb6c1; 
             padding-top: 10px; 
+            margin-top: auto; /* Luôn giữ ở cuối khung */
         }
 
-        /* Mô phỏng khung nhạc ở dưới cùng */
         .music-bar {
             margin-top: 10px;
             height: 30px;
@@ -90,7 +88,6 @@
     </div>
 
     <script>
-        // Nội dung bức thư của bạn
         const fullText = "Oaaaaaaa, helo ebe>< \n\nCaptainboy bay tới dayyyy nè! Ebe của Cap đang làm gì zaa? Có nhớ Cap hong rứa? \n\nGiữa những bộn bề, Cap chỉ muốn gói ghém tất cả yêu thương vào đây gửi đến Cừu. Mỗi ngày trôi qua, được trò chuyện cùng em là điều khiến Cap thấy hạnh phúc nhất. \n\nĐừng quên ăn uống đầy đủ và giữ gìn sức khỏe nha. Dù có chuyện gì, Cap vẫn luôn ở đây bên cạnh em. Cừu mãi là Cừu nhỏ đáng yêu nhất của Cap! ❤️";
         
         const textElement = document.getElementById("text");
@@ -99,8 +96,9 @@
         function typeWriter() {
             if (i < fullText.length) {
                 textElement.textContent += fullText.charAt(i);
-                // Tự động cuộn xuống khi đang viết
-                document.getElementById("scroll-container").scrollTop = document.getElementById("scroll-container").scrollHeight;
+                // Cuộn nội dung nếu quá dài
+                const container = document.getElementById("scroll-container");
+                container.scrollTop = container.scrollHeight;
                 i++;
                 setTimeout(typeWriter, 50);
             }
