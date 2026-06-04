@@ -12,37 +12,43 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: sans-serif;
-            padding: 10px;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 20px;
         }
 
         .envelope {
             background: white;
-            width: 100%;
-            max-width: 400px;
-            /* CỐ ĐỊNH CHIỀU CAO TẠI ĐÂY */
-            height: 450px; 
-            padding: 20px;
-            border-radius: 15px;
+            /* Thiết lập khung cố định hình vuông */
+            width: 350px;
+            height: 350px;
+            padding: 25px;
+            border-radius: 20px;
             border: 2px solid #ff80ab;
-            box-shadow: 0 5px 15px rgba(255, 128, 171, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 128, 171, 0.4);
             display: flex;
             flex-direction: column;
-            box-sizing: border-box;
             position: relative;
+            /* Tạo viền hoa ở 4 góc */
+            background-image: 
+                url('https://img.icons8.com/color/48/000000/sakura.png'), /* Hoa góc trái trên */
+                url('https://img.icons8.com/color/48/000000/sakura.png'), /* Hoa góc phải trên */
+                url('https://img.icons8.com/color/48/000000/sakura.png'), /* Hoa góc trái dưới */
+                url('https://img.icons8.com/color/48/000000/sakura.png'); /* Hoa góc phải dưới */
+            background-position: -5px -5px, calc(100% + 5px) -5px, -5px calc(100% + 5px), calc(100% + 5px) calc(100% + 5px);
+            background-repeat: no-repeat;
+            background-size: 30px;
         }
 
         h2 { 
             color: #d63384; 
             text-align: center; 
-            font-size: 19px; 
+            font-size: 18px; 
             margin: 0 0 15px 0; 
-            flex-shrink: 0; /* Giữ tiêu đề không bị thu nhỏ */
         }
         
         #scroll-container {
             flex-grow: 1;
-            overflow-y: auto; /* Thanh cuộn xuất hiện trong khung cố định */
+            overflow-y: auto; /* Thanh cuộn nếu chữ dài */
             padding-right: 5px;
             margin-bottom: 10px;
         }
@@ -50,27 +56,28 @@
         #text { 
             color: #881337; 
             line-height: 1.5; 
-            font-size: 16px;
+            font-size: 15px;
             white-space: pre-wrap;
         }
 
         .footer-area {
-            flex-shrink: 0; /* Giữ phần ký tên và nhạc không bị đẩy mất */
+            border-top: 1px dashed #ff80ab;
+            padding-top: 10px;
         }
 
         .signature { 
             text-align: right; 
             font-weight: bold; 
             color: #d63384; 
-            margin-bottom: 5px;
+            font-size: 14px;
         }
 
         .music-bar {
-            border-top: 1px dashed #ff80ab;
-            padding-top: 10px;
+            margin-top: 8px;
             display: flex;
             align-items: center;
             color: #d63384;
+            font-size: 12px;
         }
     </style>
 </head>
