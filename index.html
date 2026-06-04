@@ -14,11 +14,24 @@
             min-height: 100vh;
             font-family: 'Segoe UI', sans-serif;
             padding: 20px;
+            overflow: hidden; /* Tránh thanh cuộn khi vật thể bay ra ngoài */
         }
 
+        /* --- Hiệu ứng bay --- */
+        .falling-item {
+            position: absolute;
+            top: -50px;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* --- Khung thư --- */
         .envelope {
             background: white;
-            /* Thiết lập khung cố định hình vuông */
             width: 350px;
             height: 350px;
             padding: 25px;
@@ -28,57 +41,21 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            /* Tạo viền hoa ở 4 góc */
-            background-image: 
-                url('https://img.icons8.com/color/48/000000/sakura.png'), /* Hoa góc trái trên */
-                url('https://img.icons8.com/color/48/000000/sakura.png'), /* Hoa góc phải trên */
-                url('https://img.icons8.com/color/48/000000/sakura.png'), /* Hoa góc trái dưới */
-                url('https://img.icons8.com/color/48/000000/sakura.png'); /* Hoa góc phải dưới */
+            z-index: 2; /* Đảm bảo khung thư nằm trên vật thể bay */
+            box-sizing: border-box;
+            /* Viền hoa góc */
+            background-image: url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png');
             background-position: -5px -5px, calc(100% + 5px) -5px, -5px calc(100% + 5px), calc(100% + 5px) calc(100% + 5px);
             background-repeat: no-repeat;
             background-size: 30px;
         }
 
-        h2 { 
-            color: #d63384; 
-            text-align: center; 
-            font-size: 18px; 
-            margin: 0 0 15px 0; 
-        }
-        
-        #scroll-container {
-            flex-grow: 1;
-            overflow-y: auto; /* Thanh cuộn nếu chữ dài */
-            padding-right: 5px;
-            margin-bottom: 10px;
-        }
-
-        #text { 
-            color: #881337; 
-            line-height: 1.5; 
-            font-size: 15px;
-            white-space: pre-wrap;
-        }
-
-        .footer-area {
-            border-top: 1px dashed #ff80ab;
-            padding-top: 10px;
-        }
-
-        .signature { 
-            text-align: right; 
-            font-weight: bold; 
-            color: #d63384; 
-            font-size: 14px;
-        }
-
-        .music-bar {
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            color: #d63384;
-            font-size: 12px;
-        }
+        h2 { color: #d63384; text-align: center; font-size: 18px; margin: 0 0 15px 0; }
+        #scroll-container { flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; }
+        #text { color: #881337; line-height: 1.5; font-size: 15px; white-space: pre-wrap; }
+        .footer-area { border-top: 1px dashed #ff80ab; padding-top: 10px; }
+        .signature { text-align: right; font-weight: bold; color: #d63384; font-size: 14px; }
+        .music-bar { margin-top: 8px; display: flex; align-items: center; color: #d63384; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -108,6 +85,21 @@
                 setTimeout(typeWriter, 40);
             }
         }
+
+        // Tạo trái tim và cánh hoa bay
+        function createFallingItem() {
+            const item = document.createElement("div");
+            item.className = "falling-item";
+            item.innerHTML = Math.random() > 0.5 ? "💖" : "🌸";
+            item.style.left = Math.random() * 100 + "vw";
+            item.style.fontSize = (Math.random() * 15 + 10) + "px";
+            item.style.animationDuration = (Math.random() * 3 + 4) + "s";
+            document.body.appendChild(item);
+            setTimeout(() => item.remove(), 7000);
+        }
+
+        // Chạy hiệu ứng bay liên tục mỗi 500ms
+        setInterval(createFallingItem, 500);
         window.onload = typeWriter;
     </script>
 </body>
