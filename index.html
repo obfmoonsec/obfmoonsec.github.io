@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gửi Người Con Gái Anh Yêu</title>
+    <title>Bức thư của Mạnh Dũng</title>
     <style>
         body {
             margin: 0;
-            background-color: #ffeef2; /* Tông màu hồng nhạt của ảnh */
+            background-color: #ffeef2;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,6 +20,8 @@
             background: white;
             width: 100%;
             max-width: 400px;
+            /* CỐ ĐỊNH CHIỀU CAO TẠI ĐÂY */
+            height: 450px; 
             padding: 20px;
             border-radius: 15px;
             border: 2px solid #ff80ab;
@@ -35,11 +37,12 @@
             text-align: center; 
             font-size: 19px; 
             margin: 0 0 15px 0; 
+            flex-shrink: 0; /* Giữ tiêu đề không bị thu nhỏ */
         }
         
         #scroll-container {
             flex-grow: 1;
-            overflow-y: auto;
+            overflow-y: auto; /* Thanh cuộn xuất hiện trong khung cố định */
             padding-right: 5px;
             margin-bottom: 10px;
         }
@@ -49,6 +52,10 @@
             line-height: 1.5; 
             font-size: 16px;
             white-space: pre-wrap;
+        }
+
+        .footer-area {
+            flex-shrink: 0; /* Giữ phần ký tên và nhạc không bị đẩy mất */
         }
 
         .signature { 
@@ -74,8 +81,10 @@
         <div id="scroll-container">
             <div id="text"></div>
         </div>
-        <div class="signature">Từ: Mạnh Dũng</div>
-        <div class="music-bar">▶️ ──────────────────── -00:00</div>
+        <div class="footer-area">
+            <div class="signature">Từ: Mạnh Dũng</div>
+            <div class="music-bar">▶️ ──────────────────── -00:00</div>
+        </div>
     </div>
 
     <script>
@@ -87,6 +96,7 @@
         function typeWriter() {
             if (i < fullText.length) {
                 textElement.textContent += fullText.charAt(i);
+                document.getElementById("scroll-container").scrollTop = document.getElementById("scroll-container").scrollHeight;
                 i++;
                 setTimeout(typeWriter, 40);
             }
