@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gửi Cừu Nhỏ</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <audio controls autoplay hidden >
-  <source src="https://raw.githubusercontent.com/obfmoonsec/obfmoonsec.github.io/refs/heads/main/vuanmayvuahay.mp3" type="audio/mpeg">
-Your browser does not support the audio element.
-</audio>
     <style>
         body { margin: 0; background-color: #ffeef2; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
 
@@ -37,7 +33,48 @@ Your browser does not support the audio element.
     </style>
 </head>
 <body>
+ <audio id="myAudio" autoplay loop></audio>
 
+<script>
+    // Danh sách bài hát của bạn
+    const playlist = ["audio/12dem_1.mp3", "audio/vuanmayvuahay.mp3"];
+    const audio = document.getElementById("myAudio");
+
+    // Biến lưu trữ index bài hát vừa phát
+    let lastIndex = -1;
+
+    function playNextSong() {
+        let nextIndex;
+        
+        // Chọn ngẫu nhiên index mới mà không trùng với lastIndex
+        do {
+            nextIndex = Math.floor(Math.random() * playlist.length);
+        } while (nextIndex === lastIndex && playlist.length > 1);
+
+        lastIndex = nextIndex;
+        audio.src = playlist[nextIndex];
+        
+        // Cố gắng phát ngay
+        audio.play().catch(() => {
+            // Nếu bị trình duyệt chặn, chờ tương tác lần đầu
+            document.body.addEventListener('click', () => {
+                audio.play();
+            }, { once: true });
+        });
+    }
+
+    // Sự kiện khi nhạc kết thúc: Tự động chuyển bài
+    audio.addEventListener('ended', () => {
+        playNextSong();
+    });
+
+    // Khởi động nhạc lần đầu khi trang load (theo yêu cầu của bạn)
+    window.addEventListener('load', () => {
+        playNextSong();
+    });
+
+    // ... GIỮ NGUYÊN các hàm typeWriter, startFinale... của bạn ở đây
+</script>
     <div class="envelope" id="letter">
         <h2>Gửi Người Con Gái Anh Yêu 🌸</h2>
         <div id="scroll-container"><div id="text"></div></div>
