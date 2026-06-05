@@ -3,127 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gửi Cừu Nhỏ</title>
+    <title>Gửi Người Anh Yêu</title>
+    <audio id="myAudio"></audio>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body { margin: 0; background-color: #ffeef2; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
-
-        /* Khung thư */
-        .envelope { background: white; width: 350px; height: 350px; padding: 25px; border-radius: 20px; border: 2px solid #ff80ab; box-shadow: 0 5px 15px rgba(255, 128, 171, 0.4); display: flex; flex-direction: column; position: relative; z-index: 2; box-sizing: border-box; background-image: url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'); background-position: -5px -5px, calc(100% + 5px) -5px, -5px calc(100% + 5px), calc(100% + 5px) calc(100% + 5px); background-repeat: no-repeat; background-size: 30px; }
+        body { margin: 0; background: #ffe1e6; min-height: 100vh; display: flex; justify-content: center; align-items: center; font-family: sans-serif; overflow: hidden; }
+        .envelope { background: white; width: 350px; height: 350px; padding: 25px; border-radius: 20px; border: 2px solid #ff80ab; box-shadow: 0 5px 15px rgba(255, 128, 171, 0.4); display: flex; flex-direction: column; position: relative; z-index: 2; box-sizing: border-box; background-image: url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'); background-position: -5px -5px, calc(100% + 5px) -5px, -5px calc(100% + 5px), calc(100% + 5px) calc(100% + 5px); background-repeat: no-repeat; background-size: 30px;opacity: 0; }
+        .screen { display: none; flex-direction: column; align-items: center; justify-content: center; position: absolute; width: 100%; transition: opacity 0.8s ease-in-out; opacity: 0; z-index: 10; }
+        .screen.active { display: flex; opacity: 1; }
         h2 { color: #d63384; text-align: center; font-size: 18px; margin: 0 0 15px 0; }
-        
         #scroll-container { flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; scroll-behavior: smooth; }
         #text { color: #881337; line-height: 1.5; font-size: 15px; white-space: pre-wrap; }
-        
         .footer-area { border-top: 1px dashed #ff80ab; padding-top: 10px; }
         .signature { text-align: right; font-weight: bold; color: #d63384; font-size: 14px; }
         .music-bar { margin-top: 8px; color: #d63384; font-size: 12px; }
-
-        /* Hiệu ứng kết thúc */
         #heart-center { position: fixed; font-size: 100px; z-index: 99; opacity: 0; transition: opacity 2s ease-in; filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.8)); pointer-events: none; }
         .heart-beat { animation: heartbeat 1.2s ease-in-out infinite; }
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 25% { transform: scale(1.2); } }
-
-        #love-text { position: fixed; z-index: 100; font-size: 50px; color: #d63384; font-weight: bold; opacity: 0; pointer-events: none; }
+        .box { background: #fff8f8; padding: 30px; border-radius: 20px; border: 1px solid #ff80ab; text-align: left; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 350px; position: relative; display: flex; flex-direction: column; }
+        h1, h3 { color: #d63384; margin-bottom: 15px; text-align: center; }
+        input { padding: 12px; width: 90%; border-radius: 8px; border: 1px solid #ffb6c1; margin: 10px 0; align-self: center; }
+         #love-text { position: fixed; z-index: 100; font-size: 50px; color: #d63384; font-weight: bold; opacity: 0; pointer-events: none; }
+         #love-text1 { position: fixed; z-index: 100; font-size: 50px; color: #d63384; font-weight: bold; opacity: 0; pointer-events: none; }
         .grow-fade { animation: growAndFade 3s ease-out forwards; }
         @keyframes growAndFade { 0% { transform: scale(0.5); opacity: 0; } 50% { transform: scale(1.5); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+        /* Căn trái nút và chú thích */
+        button { padding: 10px 25px; background: #ff80ab; color: white; border: none; border-radius: 8px; cursor: pointer; align-self: flex-start; }
+        .note-text { font-size: 12px; color: #aaa; margin-bottom: 10px; align-self: flex-start; }
 
-        .falling-item { position: absolute; top: -50px; z-index: 1; animation: fall linear forwards; }
+        .decor { position: absolute; font-size: 30px; animation: float 3s ease-in-out infinite; z-index: 1; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .d1 { top: 15%; left: 15%; } .d2 { top: 20%; right: 10%; } .d3 { bottom: 20%; left: 10%; } .d4 { bottom: 15%; right: 15%; }
+        
+        /* Hiệu ứng rơi */
+        .falling-item { position: fixed; top: -50px; z-index: 1; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
 <body>
- <audio id="myAudio" autoplay loop hidden></audio>
 
-<script>
-    // Danh sách bài hát của bạn
-    const playlist = ["audio/12dem_1.mp3", "audio/vuanmayvuahay.mp3"];
-    const audio = document.getElementById("myAudio");
+    <div id="intro-screen" class="screen active">
+        <div class="decor d1">🌸</div><div class="decor d2">✨</div><div class="decor d3">💖</div><div class="decor d4">🎀</div>
+        <div class="box" style="text-align: center; z-index: 2;">
+            <h1 style="font-size: 20px; color: #d63384;">🌸 Chào cậu, Người tớ yêu!</h1>
+            <p>Có một điều bí mật dành riêng cho cậu đây...</p>
+            <button style="align-self: center;" onclick="transitionScreen('intro-screen', 'login-screen')">Xem ngay đi 💌</button>
+        </div>
+    </div>
 
-    // Biến lưu trữ index bài hát vừa phát
-    let lastIndex = -1;
+    <div id="login-screen" class="screen">
+        <div class="box">
+            <h3>Có một lời yêu thương gửi tới bạn 💌</h3>
+            <p>Mật khẩu của trái tim 🧡</p>
+            <input type="password" id="pass" placeholder="Nhập vào đây">
+            <p class="note-text">Mật khẩu là ngày sinh của cậu đó 🥰</p>
+            <button onclick="checkPass()">Đồng ý</button>
+            <span style="position: absolute; right: 20px; bottom: 20px; font-size: 40px;">(˃ᆺ˂)</span>
+        </div>
+    </div>
 
-    function playNextSong() {
-        let nextIndex;
-        
-        // Chọn ngẫu nhiên index mới mà không trùng với lastIndex
-        do {
-            nextIndex = Math.floor(Math.random() * playlist.length);
-        } while (nextIndex === lastIndex && playlist.length > 1);
-
-        lastIndex = nextIndex;
-        audio.src = playlist[nextIndex];
-        
-        // Cố gắng phát ngay
-        audio.play().catch(() => {
-            // Nếu bị trình duyệt chặn, chờ tương tác lần đầu
-            document.body.addEventListener('click', () => {
-                audio.play();
-            }, { once: true });
-        });
-    }
-
-    // Sự kiện khi nhạc kết thúc: Tự động chuyển bài
-    audio.addEventListener('ended', () => {
-        playNextSong();
-    });
-
-    // Khởi động nhạc lần đầu khi trang load (theo yêu cầu của bạn)
-    window.addEventListener('load', () => {
-        playNextSong();
-    });
-
-    // ... GIỮ NGUYÊN các hàm typeWriter, startFinale... của bạn ở đây
-</script>
-    <div class="envelope" id="letter">
+    <div id="loading-screen" class="screen">
+        <div class="box" style="text-align: center;">
+            <h2 id="loading-text" style="color: #d63384;">LOADING LOVE ... 0%</h2>
+            <div style="width: 100%; height: 20px; background: #ffe1e6; border-radius: 10px; overflow: hidden; margin: 10px 0;">
+                <div id="progress-bar" style="width: 0%; height: 100%; background: #ff80ab; transition: width 2s;"></div>
+            </div>
+            <button id="finish-btn" style="display: none; align-self: center;" onclick="finishLoading()">Bấm vào đây nè 🎀</button>
+        </div>
+    </div>
+    <div class="envelope" id="letter" hidden>
         <h2>Gửi Người Con Gái Anh Yêu 🌸</h2>
         <div id="scroll-container"><div id="text"></div></div>
         <div class="footer-area">
             <div class="signature">Từ: Mạnh Dũng</div>
-            <div class="music-bar">▶️ ──────────────────── -00:00</div>
+            <div class="music-bar">▶️ ──────────────────── -04:11</div>
         </div>
     </div>
 
     <div id="heart-center">❤️</div>
-    <div id="love-text">Yêu em!</div>
-
+    <div id="love-text">I Love You!</div>
+    <div id="love-text1">Rất Nhiều</div>
     <script>
-        const fullText = "Captainboy bay tới dayyyy nè! Ebe của Cap đang làm gì zaa? Có nhớ Cap hong rứa?\n\nGiữa những bộn bề, Cap chỉ muốn gói ghém tất cả yêu thương vào đây gửi đến Cừu. Mỗi ngày trôi qua, được trò chuyện cùng em là điều khiến Cap thấy hạnh phúc nhất.\n\nĐừng quên ăn uống đầy đủ và giữ gìn sức khỏe nha. Dù có chuyện gì, Cap vẫn luôn ở đây bên cạnh em. Cừu mãi là Cừu nhỏ đáng yêu nhất của Cap! ❤️";
-        
-        window.onload = () => {
-            typeWriter();
-            setInterval(createFallingItem, 500);
-        };
 
-        let i = 0;
+        const fullText = "Captainboy bay tới dayyyy nè! Ebe của Cap đang làm gì zaa? Có nhớ Cap hong rứa?\n\nGiữa những bộn bề, Cap chỉ muốn gói ghém tất cả yêu thương vào đây gửi đến Cừu. Mỗi ngày trôi qua, được trò chuyện cùng em là điều khiến Cap thấy hạnh phúc nhất.\n\nĐừng quên ăn uống đầy đủ và giữ gìn sức khỏe nha. Dù có chuyện gì, Cap vẫn luôn ở đây bên cạnh em. Cừu mãi là Cừu nhỏ đáng yêu nhất của Cap! ❤️";
+        function transitionScreen(fromId, toId) {
+            const from = document.getElementById(fromId);
+            const to = document.getElementById(toId);
+            from.style.opacity = '0';
+            setTimeout(() => {
+                from.classList.remove('active');
+                to.classList.add('active');
+                setTimeout(() => { to.style.opacity = '1'; }, 50);
+            }, 800);
+        }
+        function checkPass() {
+  
+                transitionScreen('login-screen', 'loading-screen');
+                startLoading();
+
+        }
+let k = 0;
         function typeWriter() {
-            if (i < fullText.length) {
+            if (k < fullText.length) {
                 const textElem = document.getElementById("text");
-                textElem.textContent += fullText.charAt(i);
-                
-                // Tự động cuộn
+                textElem.textContent += fullText.charAt(k);
                 const container = document.getElementById("scroll-container");
                 container.scrollTop = container.scrollHeight;
-                
-                i++;
-                setTimeout(typeWriter, 40);
+                k++;
+                setTimeout(typeWriter, 55);
             } else {
                 startFinale();
             }
         }
+        
+        function startLoading() {
+            let progress = 0;
+            const bar = document.getElementById('progress-bar');
+            const text = document.getElementById('loading-text');
+            const btn = document.getElementById('finish-btn');
+            const interval = setInterval(() => {
+                progress += 2;
+                bar.style.width = progress + '%';
+                text.innerText = "LOADING LOVE ... " + progress + "%";
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    text.innerText = "Xong rồi nè! ❤️";
+                    btn.style.display = "inline-block";
+                }
+            }, 100);
+        }
 
-        function startFinale() {
+        function finishLoading() {
+            const screen = document.getElementById('loading-screen');
+            screen.style.transition = "opacity 1s ease";
+            screen.style.opacity = "0";
+            setTimeout(() => { transitionScreen('loading-screen','letter'),typeWriter(); }, 2000);
+        }
+
+        // Hàm tạo item rơi
+        function createFallingItem() {
+            const el = document.createElement('div');
+            el.className = 'falling-item';
+            const icons = ['🌸', '💟', '🎀', '❤️' , '(˃ᆺ˂)' , '(^･ｪ･^)'];
+            el.textContent = icons[Math.floor(Math.random() * icons.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            el.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 8000);
+        }
+        setInterval(createFallingItem, 500);
+
+     function startFinale() {
             const heart = document.getElementById("heart-center");
+            const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
             heart.style.opacity = "1";
             heart.classList.add("heart-beat");
-            
             setTimeout(() => {
                 heart.style.display = "none";
                 document.getElementById("love-text").classList.add("grow-fade");
+                setTimeout(() => {
+                    document.getElementById("love-text1").classList.add("grow-fade");
+                    }, 2000);
                 triggerFireworks();
             }, 3000);
         }
-
         function triggerFireworks() {
             const end = Date.now() + 3000;
             const colors = ['#ff4d4d', '#ff94c2', '#ffccd5'];
@@ -133,17 +177,37 @@
                 if (Date.now() < end) requestAnimationFrame(frame);
             }());
         }
+        // Danh sách các file nhạc của bạn
+    const playlist = [
+        "audio/vuanmayvuahay.mp3",
+        'audio/12dem_1.mp3',
+        "audio/chieudanbuong.mp3",
+        "audio/nguoixoadiu.mp3",
+        "audio/minhanhthoi.mp3"
+    ];
 
-        function createFallingItem() {
-            const item = document.createElement("div");
-            item.className = "falling-item";
-            item.innerHTML = Math.random() > 0.5 ? "💖" : "🌸";
-            item.style.left = Math.random() * 100 + "vw";
-            item.style.fontSize = (Math.random() * 15 + 10) + "px";
-            item.style.animationDuration = (Math.random() * 3 + 4) + "s";
-            document.body.appendChild(item);
-            setTimeout(() => item.remove(), 7000);
-        }
+    function playRandomMusic() {
+        const audio = document.getElementById("myAudio");
+        // Chọn ngẫu nhiên 1 bài
+        const randomSong = playlist[Math.floor(Math.random() * playlist.length)];
+        
+        audio.src = randomSong;
+        audio.loop = false; // Đảm bảo không lặp lại
+        
+        // Phát nhạc
+        audio.play().catch(e => {
+            console.log("Trình duyệt chặn, cần click vào trang để phát.");
+            // Nếu bị chặn, đợi người dùng click bất kỳ đâu vào trang để phát
+            document.addEventListener('click', () => {
+                audio.play();
+            }, { once: true });
+        });
+    }
+
+    // Sau 3 giây kể từ khi mở trang (hoặc khi click vào nút)
+    window.onload = () => {
+        setTimeout(playRandomMusic, 1000);
+    };
     </script>
 </body>
 </html>
