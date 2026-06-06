@@ -38,18 +38,45 @@
         .falling-item { position: fixed; top: -50px; z-index: 1; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        /* CẤU TRÚC CSS CỦA NÚT CHAT VÀ DIALOG THÔNG ĐIỆP (KHÔNG ĐỔI KẾT CẤU CŨ) */
-        .chat-trigger { position: fixed; bottom: 20px; right: 20px; font-size: 28px; cursor: pointer; z-index: 999; background: white; padding: 10px; border-radius: 50%; box-shadow: 0 4px 12px rgba(255, 128, 171, 0.4); border: 2px solid #ff80ab; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; box-sizing: border-box; }
+        /* CẤU TRÚC NÚT CHAT NỔI (Đã ẩn mặc định và tích hợp hiệu ứng chuyển động mượt mà) */
+        .chat-trigger { 
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px; 
+            font-size: 28px; 
+            cursor: pointer; 
+            z-index: 999; 
+            background: white; 
+            padding: 10px; 
+            border-radius: 50%; 
+            box-shadow: 0 4px 12px rgba(255, 128, 171, 0.4); 
+            border: 2px solid #ff80ab; 
+            transition: transform 0.2s, opacity 0.8s ease-in-out; 
+            display: none; /* Ẩn đi khi mới bắt đầu chạy trang web */
+            opacity: 0;    /* Ban đầu trong suốt để có hiệu ứng fade-in mượt */
+            align-items: center; 
+            justify-content: center; 
+            width: 45px; 
+            height: 45px; 
+            box-sizing: border-box; 
+        }
         .chat-trigger:hover { transform: scale(1.1); }
+        
+        /* Modal dùng chung cho Chat và Thông báo */
         .chat-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; }
         .chat-modal.active { display: flex; opacity: 1; }
         .chat-content { background: #fff8f8; border: 2px solid #ff80ab; padding: 25px; border-radius: 20px; width: 310px; text-align: center; box-shadow: 0 10px 25px rgba(255, 128, 171, 0.2); box-sizing: border-box; }
         .chat-content h3 { color: #d63384; margin-top: 0; font-size: 16px; margin-bottom: 10px; }
         .chat-content textarea { width: 100%; height: 90px; padding: 10px; margin: 12px 0; border-radius: 8px; border: 1px solid #ffb6c1; background: white; box-sizing: border-box; outline: none; color: #881337; font-family: sans-serif; resize: none; font-size: 14px; }
         .chat-content textarea:focus { border-color: #ff80ab; }
+        
         .chat-btn-group { display: flex; gap: 10px; justify-content: center; width: 100%; }
         .chat-btn-send { padding: 10px 20px; background: #ff80ab; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; flex: 1; font-size: 14px; }
         .chat-btn-close { padding: 10px 20px; background: #ffe1e6; color: #d63384; border: 1px solid #ffb6c1; border-radius: 8px; cursor: pointer; flex: 1; font-size: 14px; }
+        
+        /* CSS cho nút trong popup thông báo thành công */
+        .ok-btn { padding: 10px 25px; background: #ff80ab; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; box-sizing: border-box; margin-top: 10px; }
+        .ok-btn:hover { background: #d63384; }
     </style>
 </head>
 <body>
@@ -97,7 +124,8 @@
     <div id="love-text">I Love You!</div>
     <div id="love-text1">Rất Nhiều</div>
 
-    <div class="chat-trigger" onclick="toggleChat(true)">💬</div>
+    <!-- KHUNG CHAT NỔI (Sẽ được gọi hiển thị bằng JavaScript khi vào đúng bước đọc thư) -->
+    <div class="chat-trigger" id="chat-icon" onclick="toggleChat(true)">💬</div>
     <div id="chat-modal" class="chat-modal">
         <div class="chat-content">
             <h3>Gửi tâm tư cho Mạnh Dũng 💕</h3>
@@ -109,10 +137,20 @@
         </div>
     </div>
 
+    <!-- KHUNG THÔNG BÁO TỰ CHẾ SAU KHI GỬI THÀNH CÔNG -->
+    <div id="notification-modal" class="chat-modal">
+        <div class="chat-content" style="width: 280px; padding: 20px;">
+            <span style="font-size: 40px;">💖</span>
+            <h4 style="color: #d63384; margin: 10px 0 5px 0;">Thành Công!</h4>
+            <p style="font-size: 13.5px; color: #881337; margin: 0 0 15px 0; line-height: 1.4;">Đã gửi lời nhắn đến anh thành công rồi nhé! 💕</p>
+            <button class="ok-btn" onclick="toggleNotification(false)">Đồng ý</button>
+        </div>
+    </div>
+
     <script>
     const audio = document.getElementById("myAudio");
     audio.volume = 1; 
-        const fullText = "Chào Công Chúa nhỏ của anh, \n\nAnh viết những dòng này khi ngoài kia thế giới vẫn đang hối hả, còn trong tâm trí anh, mọi thứ dường như lắng đọng lại chỉ vì hình bóng của em. Giữa những bộn bề, việc được trò chuyện, lắng nghe giọng nói hay chỉ đơn giản là biết em vẫn đang bình yên, chính là 'trạm sạc' hạnh phúc nhất của anh mỗi ngày.\n\nAnh không ở đó để nấu cho em một bữa ăn hay lau đi những giọt nước mắt, nhưng anh luôn ở đây – trong từng suy nghĩ, luôn sẵn sàng trở thành điểm tựa vững chãi nhất của em. Dù ngoài kia bão giông hay nắng ấm, chỉ cần em quay đầu lại, anh vẫn sẽ đứng đó, đợi em.\n\nCông chúa của anh ơi, nhớ giữ gìn sức khỏe, ăn uống thật ngon và ngủ thật sâu nhé. Mãi yêu em, nhiều hơn cả những gì anh có thể diễn tả bằng lời. ❤️";
+        const fullText = "Chào Công Chúa nhỏ của anh, \n\nAnh viết những dòng này khi ngoài kia thế giới vẫn đang hối hả, còn trong tâm trí anh, mọi thứ dường như lắng đọng lại chỉ vì hình bóng của em. Giữa những bộn bề, việc được trò chuyện, lắng nghe giọng nói hay chỉ đơn giản là biết em vẫn đang bình yên, chính là 'trạm sạc' hạnh phúc nhất của anh mỗi ngày.\n\nAnh không ở đó để nấu cho em một bữa ăn hay lau đi những giọt nước mắt, nhưng anh luôn ở đây – trong từng suy nghĩ, luôn sẵn sàng trở thành điểm tựa vững chãi nhất of em. Dù ngoài kia bão giông hay nắng ấm, chỉ cần em quay đầu lại, anh vẫn sẽ đứng đó, đợi em.\n\nCông chúa của anh ơi, nhớ giữ gìn sức khỏe, ăn uống thật ngon và ngủ thật sâu nhé. Mãi yêu em, nhiều hơn cả những gì anh có thể diễn tả bằng lời. ❤️";
         
         function transitionScreen(fromId, toId) {
             const from = document.getElementById(fromId);
@@ -136,7 +174,7 @@
                 const container = document.getElementById("scroll-container");
                 container.scrollTop = container.scrollHeight;
                 k++;
-                setTimeout(typeWriter, 60);
+                setTimeout(typeWriter, 30);
             } else {
                 startFinale();
             }
@@ -163,7 +201,21 @@
             const screen = document.getElementById('loading-screen');
             screen.style.transition = "opacity 1s ease";
             screen.style.opacity = "0";
-            setTimeout(() => { transitionScreen('loading-screen','letter'),typeWriter(); }, 2000);
+            setTimeout(() => { 
+                transitionScreen('loading-screen','letter');
+                typeWriter(); 
+                // Kích hoạt hiển thị nút chát ngay khi bắt đầu vào màn hình bức thư (đúng bước này)
+                showChatIcon(); 
+            }, 2000);
+        }
+
+        // Hàm xử lý xuất hiện mượt mà của nút chat ở bước cuối cùng
+        function showChatIcon() {
+            const chatIcon = document.getElementById('chat-icon');
+            chatIcon.style.display = 'flex';
+            setTimeout(() => {
+                chatIcon.style.opacity = '1';
+            }, 50);
         }
 
         function createFallingItem() {
@@ -226,7 +278,7 @@
         setTimeout(playRandomMusic, 1000);
     };
 
-    /* CÁC HÀM XỬ LÝ ĐÓNG MỞ VÀ GỬI WEBHOOK CHAT */
+    /* CÁC HÀM XỬ LÝ CHAT VÀ GỬI WEBHOOK DISCORD */
     function toggleChat(show) {
         const modal = document.getElementById('chat-modal');
         if (show) {
@@ -238,23 +290,54 @@
         }
     }
 
+    function toggleNotification(show) {
+        const modal = document.getElementById('notification-modal');
+        if (show) {
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('active'), 10);
+        } else {
+            modal.classList.remove('active');
+            setTimeout(() => modal.style.display = 'none', 400);
+        }
+    }
+
     function sendReply() {
-        const msg = document.getElementById("reply-msg").value;
-        // HÃY ĐIỀN LINK WEBHOOK DISCORD CỦA BẠN VÀO GIỮA HAI DẤU NHÁY DƯỚI ĐÂY
-        const WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL_HERE"; 
+        const msg = document.getElementById("reply-msg").value.trim();
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1512740637693317241/Q0GW0cVEZLr2Kv8Vv-lt6N5pGzHWoScwupXrZouAoOKfUr0AElhjlRZXYKi1UABDjo4N"; 
         
-        if(!msg) return alert("Cậu chưa viết gì vào ô cả nha!");
+        if(!msg) {
+            alert("Cậu chưa viết gì vào ô cả nha!");
+            return;
+        }
+
+        const currentTime = new Date().toLocaleString("vi-VN");
+        const ticks = "```";
+        
+        // ĐỊNH DẠNG RICH EMBED SANG TRỌNG GIỐNG HÌNH ẢNH BẠN GỬI
+        const payload = {
+            embeds: [{
+                title: "💌 Tâm tư người đọc:",
+                color: 16744619, // Mã màu hồng đậm của trái tim
+                description: ticks + "\n" + msg + "\n" + ticks,
+                footer: {
+                    text: "Gửi lúc: " + currentTime
+                }
+            }]
+        };
         
         fetch(WEBHOOK_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ content: "💖 Lời nhắn từ Công Chúa: " + msg })
+            body: JSON.stringify(payload)
         }).then(() => { 
-            alert("Đã gửi lời nhắn đến anh thành công rồi nhé! 💕"); 
             toggleChat(false); 
             document.getElementById("reply-msg").value = ""; 
+            // HIỆN THỊ BẢNG THÔNG BÁO TỰ CHẾ THAY VÌ ALERT PHÁ VỠ GIAO DIỆN
+            setTimeout(() => {
+                toggleNotification(true);
+            }, 300);
         }).catch(err => {
-            alert("Có lỗi khi gửi tin nhắn, cậu kiểm tra lại link Webhook nhé!");
+            alert("Có lỗi khi gửi tin nhắn, cậu kiểm tra lại kết nối mạng nhé!");
         });
     }
     </script>
