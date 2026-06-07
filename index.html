@@ -51,7 +51,7 @@
         .signature { text-align: right; font-weight: bold; color: #d63384; font-size: 14px; }
         .music-bar { margin-top: 8px; color: #d63384; font-size: 12px; }
         
-      .box { background: #fff8f8; padding: 30px; border-radius: 20px; border: 1px solid #ff80ab; text-align: left; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 350px; position: relative; display: flex; flex-direction: column; }
+        .box { background: #fff8f8; padding: 30px; border-radius: 20px; border: 1px solid #ff80ab; text-align: left; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 350px; position: relative; display: flex; flex-direction: column; }
         h1, h3 { color: #d63384; margin-bottom: 15px; text-align: center; }
         input { padding: 12px; width: 90%; border-radius: 8px; border: 1px solid #ffb6c1; margin: 10px 0; align-self: center; }
         button { padding: 10px 25px; background: #ff80ab; color: white; border: none; border-radius: 8px; cursor: pointer; align-self: flex-start; }
@@ -68,7 +68,7 @@
         .rising-item { position: fixed; bottom: -50px; z-index: 2; animation: rise linear forwards; pointer-events: none; }
         @keyframes rise { to { transform: translateY(-110vh) rotate(-45deg); } }
 
-          /* --- CSS CHO MÀN HÌNH LOADING CHUYẾN BAY MỚI --- */
+        /* --- CSS CHO MÀN HÌNH LOADING CHUYẾN BAY MỚI --- */
         .loading-box { background: #ffe1e6 !important; border: 2px solid #ffb6c1 !important; box-shadow: 0 10px 25px rgba(255, 128, 171, 0.3) !important; display: flex; flex-direction: column; align-items: center; width: 320px; }
         .plane-img { font-size: 60px; margin-bottom: 10px; animation: fly-effect 2s infinite ease-in-out; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1)); }
         @keyframes fly-effect { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(5deg); } }
@@ -150,7 +150,6 @@
         </div>
     </div>
 
-  
     <div id="loading-screen" class="screen">
         <div class="box loading-box">
             <div class="plane-img">ε(´｡•᎑•`)💕</div>
@@ -180,8 +179,8 @@
     </div>
 
     <div id="heart-center">❤️</div>
-    <div id="love-text">Làm người yêu Anh nhé❤</div>
-    <div id="love-text1">Yêu Em</div>
+    <div id="love-text">I Love You!</div>
+    <div id="love-text1">So Much</div>
 
     <div class="controls-group" id="controls-panel">
         <div class="btn-wrapper">
@@ -219,6 +218,7 @@
         audio.volume = 1; 
         const fullText = "Chào công chúa nhỏ,\n\nGiữa thế giới bộn bề, chỉ cần nghĩ đến em là mọi lo toan trong anh đều tan biến. Anh không ở cạnh để chăm sóc em mỗi ngày, nhưng trái tim anh luôn dành một khoảng lặng bình yên nhất để lắng nghe em.\n\nĐừng quá áp lực nhé, giông bão ngoài kia cứ để anh gánh, bên anh luôn là khoảng trời dịu dàng dành riêng cho em. Giữ sức khỏe thật tốt, bé yêu của anh nhé!"
         let isUniverseMode = false;
+        let dynamicItemInterval = null;
 
         function transitionScreen(fromId, toId) {
             const from = document.getElementById(fromId);
@@ -280,8 +280,8 @@
                 setTimeout(() => { letter.style.opacity = '1'; letter.classList.add('pop-in'); }, 20);
 
                 confetti({
-                    particleCount: 70,
-                    spread: 80,
+                    particleCount: 60,
+                    spread: 70,
                     origin: { y: 0.6 },
                     colors: ['#ff80ab', '#ffb6c1', '#ffffff', '#d63384'],
                 });
@@ -308,15 +308,14 @@
                     const curtain = document.getElementById("universe-curtain");
                     curtain.style.top = "0%";
                     
-                    // Kéo khung thư bay lên cùng tên lửa
                     const letter = document.getElementById("letter");
                     letter.classList.remove("pop-in");
                     letter.classList.add("slide-up-out");
                     
-                    for (let i = 0; i < 60; i++) {
+                    for (let i = 0; i < 40; i++) {
                         const star = document.createElement('div');
                         star.className = 'star';
-                        const size = Math.random() * 3 + 1;
+                        const size = Math.random() * 2.5 + 1;
                         star.style.width = size + 'px';
                         star.style.height = size + 'px';
                         star.style.left = Math.random() * 100 + 'vw';
@@ -329,10 +328,12 @@
                     setTimeout(() => {
                         isUniverseMode = true; 
                         
-                        // Ẩn hẳn và chuẩn bị cấu trúc sạch để có thể xem lại thư về sau
                         letter.style.display = "none"; 
                         letter.classList.remove("slide-up-out");
                         letter.style.transform = "translateY(0)";
+
+                        clearInterval(dynamicItemInterval);
+                        dynamicItemInterval = setInterval(createDynamicItems, 900);
 
                         showControlsPanel(); 
                         startFinale();       
@@ -354,23 +355,23 @@
                 const icons = ['🌸', '💟', '🎀', '❤️' , '(˃ᆺ˂)'];
                 el.textContent = icons[Math.floor(Math.random() * icons.length)];
                 el.style.left = Math.random() * 100 + 'vw';
-                el.style.fontSize = (Math.random() * 15 + 15) + 'px';
-                el.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                el.style.fontSize = (Math.random() * 12 + 15) + 'px';
+                el.style.animationDuration = (Math.random() * 2 + 4) + 's';
                 document.body.appendChild(el);
-                setTimeout(() => el.remove(), 8000);
+                setTimeout(() => el.remove(), 5000);
             } else {
                 const rocket = document.createElement('div');
                 rocket.className = 'rising-item';
                 const spaceIcons = ['🚀', '✨', '⭐', '💫', '🔥'];
                 rocket.textContent = spaceIcons[Math.floor(Math.random() * spaceIcons.length)];
                 rocket.style.left = Math.random() * 100 + 'vw';
-                rocket.style.fontSize = (Math.random() * 12 + 18) + 'px';
-                rocket.style.animationDuration = (Math.random() * 2.5 + 3.5) + 's'; 
+                rocket.style.fontSize = (Math.random() * 10 + 16) + 'px';
+                rocket.style.animationDuration = (Math.random() * 2 + 3) + 's'; 
                 document.getElementById("universe-curtain").appendChild(rocket);
-                setTimeout(() => rocket.remove(), 6000);
+                setTimeout(() => rocket.remove(), 4500);
             }
         }
-        setInterval(createDynamicItems, 450);
+        dynamicItemInterval = setInterval(createDynamicItems, 450);
 
         function startFinale() {
             const heart = document.getElementById("heart-center");
@@ -407,7 +408,7 @@
                 
                 letter.classList.remove("pop-in");
                 letter.classList.remove("slide-up-out");
-                letter.style.transform = "translateY(0)"; // Trả khung thư về giữa khi ấn xem lại
+                letter.style.transform = "translateY(0)"; 
                 
                 letter.style.display = "flex";
                 setTimeout(() => { letter.style.opacity = "1"; }, 50);
@@ -424,11 +425,11 @@
         }
 
         function triggerFireworks() {
-            const end = Date.now() + 3500;
+            const end = Date.now() + 2500;
             const colors = ['#ff4d4d', '#ff94c2', '#ffccd5'];
             (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: colors, shapes: ['heart'] });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: colors, shapes: ['heart'] });
+                confetti({ particleCount: 2, angle: 60, spread: 45, origin: { x: 0, y: 0.6 }, colors: colors, shapes: ['heart'] });
+                confetti({ particleCount: 2, angle: 120, spread: 45, origin: { x: 1, y: 0.6 }, colors: colors, shapes: ['heart'] });
                 if (Date.now() < end) requestAnimationFrame(frame);
             }());
         }
@@ -436,7 +437,6 @@
         const playlist = ["audio/chieudanbun.mp3"];
 
         function playRandomMusic() {
-            const audio = document.getElementById("myAudio");
             const randomSong = playlist[Math.floor(Math.random() * playlist.length)];
             audio.src = randomSong;
             audio.loop = false; 
