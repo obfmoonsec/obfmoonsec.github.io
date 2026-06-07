@@ -9,7 +9,7 @@
     <style>
         body { margin: 0; background: #ffe1e6; min-height: 100vh; display: flex; justify-content: center; align-items: center; font-family: sans-serif; overflow: hidden; }
         
-        /* MÀN VŨ TRỤ CHUYỂN CẢNH nằm ẩn phía dưới */
+        /* MÀN VŨ TRỤ CHUYỂN CẢNH */
         #universe-curtain {
             position: fixed;
             top: 100%;
@@ -23,7 +23,7 @@
         .star { position: absolute; background: white; border-radius: 50%; opacity: 0; animation: twinkle infinite alternate; pointer-events: none; }
         @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* TÊN LỬA KÉO MÀN VŨ TRỤ (Ẩn ban đầu dưới màn hình) */
+        /* TÊN LỬA KÉO MÀN VŨ TRỤ */
         #pull-rocket {
             position: absolute;
             bottom: -100px;
@@ -39,7 +39,7 @@
             100% { bottom: 120%; }
         }
 
-        /* KHUNG THƯ CHÍNH (Được ưu tiên z-index cao để che lên trên) */
+        /* KHUNG THƯ CHÍNH */
         .envelope { background: white; width: 350px; height: 350px; padding: 25px; border-radius: 20px; border: 2px solid #ff80ab; box-shadow: 0 5px 15px rgba(255, 128, 171, 0.4); display: none; flex-direction: column; position: relative; z-index: 5; box-sizing: border-box; background-image: url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'); background-position: -5px -5px, calc(100% + 5px) -5px, -5px calc(100% + 5px), calc(100% + 5px) calc(100% + 5px); background-repeat: no-repeat; background-size: 30px; opacity: 0; transition: opacity 0.5s ease; }
         .screen { display: none; flex-direction: column; align-items: center; justify-content: center; position: absolute; width: 100%; transition: opacity 0.8s ease-in-out; opacity: 0; z-index: 10; }
         .screen.active { display: flex; opacity: 1; }
@@ -51,10 +51,9 @@
         .signature { text-align: right; font-weight: bold; color: #d63384; font-size: 14px; }
         .music-bar { margin-top: 8px; color: #d63384; font-size: 12px; }
         
-        /* CẤU TRÚC BOX ĐĂNG NHẬP */
-        .box { background: #fff8f8; padding: 30px; border-radius: 20px; border: 1px solid #ff80ab; text-align: left; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 320px; max-width: 90%; position: relative; display: flex; flex-direction: column; box-sizing: border-box; }
+      .box { background: #fff8f8; padding: 30px; border-radius: 20px; border: 1px solid #ff80ab; text-align: left; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 350px; position: relative; display: flex; flex-direction: column; }
         h1, h3 { color: #d63384; margin-bottom: 15px; text-align: center; }
-        input { padding: 12px; width: 100%; border-radius: 8px; border: 1px solid #ffb6c1; margin: 10px 0; box-sizing: border-box; align-self: center; }
+        input { padding: 12px; width: 90%; border-radius: 8px; border: 1px solid #ffb6c1; margin: 10px 0; align-self: center; }
         button { padding: 10px 25px; background: #ff80ab; color: white; border: none; border-radius: 8px; cursor: pointer; align-self: flex-start; }
         .note-text { font-size: 12px; color: #aaa; margin-bottom: 10px; align-self: flex-start; }
 
@@ -69,7 +68,7 @@
         .rising-item { position: fixed; bottom: -50px; z-index: 2; animation: rise linear forwards; pointer-events: none; }
         @keyframes rise { to { transform: translateY(-110vh) rotate(-45deg); } }
 
-        /* LOADING CHUYẾN BAY */
+          /* --- CSS CHO MÀN HÌNH LOADING CHUYẾN BAY MỚI --- */
         .loading-box { background: #ffe1e6 !important; border: 2px solid #ffb6c1 !important; box-shadow: 0 10px 25px rgba(255, 128, 171, 0.3) !important; display: flex; flex-direction: column; align-items: center; width: 320px; }
         .plane-img { font-size: 60px; margin-bottom: 10px; animation: fly-effect 2s infinite ease-in-out; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1)); }
         @keyframes fly-effect { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(5deg); } }
@@ -77,17 +76,26 @@
         .heart-track { display: flex; gap: 6px; margin: 15px 0; padding-bottom: 10px; border-bottom: 1px dashed #ff80ab; }
         .heart-dot { font-size: 18px; color: #ffccd5; transition: all 0.4s ease; }
         .heart-dot.active { color: #ff3366; transform: scale(1.4); text-shadow: 0 0 8px #ff80ab; }
+        
         .loading-title { color: #d63384; font-weight: 700; font-size: 16px; margin-top: 5px; text-align: center; }
-
-        /* HIỆU ỨNG POP-IN KHUNG THƯ */
+        
         .fly-away { animation: flyAway 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
         @keyframes flyAway { 0% { transform: scale(1) translateY(0); opacity: 1; } 100% { transform: scale(0.5) translateY(-200px); opacity: 0; } }
 
-        .pop-in { display: flex !important; animation: popIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .pop-in { animation: popIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes popIn { 0% { transform: scale(0.4) translateY(150px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
 
+        /* HIỆU ỨNG TRƯỢT LÊN CHO KHUNG THƯ CO THEO TÊN LỬA */
+        .slide-up-out {
+            animation: letterSlideUp 2.5s cubic-bezier(0.19, 1, 0.22, 1) forwards !important;
+        }
+        @keyframes letterSlideUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-150vh); opacity: 1; }
+        }
+
         /* CHỮ TỎ TÌNH TRÊN NỀN VŨ TRỤ */
-        #heart-center { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 100px; z-index: 3; opacity: 0; transition: opacity 0.8s ease; filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.8)); pointer-events: none; }
+        #heart-center { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 100px; z-index: 3; opacity: 0; display: none; transition: opacity 0.8s ease; filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.8)); pointer-events: none; }
         .heart-beat { animation: heartbeat 1.2s ease-in-out infinite; }
         @keyframes heartbeat { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 25% { transform: translate(-50%, -50%) scale(1.25); } }
         
@@ -142,6 +150,7 @@
         </div>
     </div>
 
+  
     <div id="loading-screen" class="screen">
         <div class="box loading-box">
             <div class="plane-img">ε(´｡•᎑•`)💕</div>
@@ -156,12 +165,11 @@
             
             <div id="loading-text" class="loading-title">Khởi động yêu thương... 0%</div>
             
-            <button id="finish-btn" style="display: none; margin-top: 20px; background: #d63384; border:none; color:white; padding: 10px 20px; border-radius: 8px; cursor:pointer; align-self: center;" onclick="finishLoading()">
+            <button id="finish-btn" style="display: none; margin-top: 20px; background: #d63384; border:none; color:white; padding: 10px 20px; border-radius: 8px; cursor:pointer; margin-left: 75px;" onclick="finishLoading()">
                    Ở đây nè cục dàng 🎀
             </button>
         </div>
     </div>
-    
     <div class="envelope" id="letter">
         <h2>Gửi Người Con Gái Anh Yêu 🌸</h2>
         <div id="scroll-container"><div id="text"></div></div>
@@ -209,7 +217,7 @@
     <script>
         const audio = document.getElementById("myAudio");
         audio.volume = 1; 
-        const fullText = "Chào công chúa nhỏ,\n\n Anh viết những dòng này khi thế giới ngoài kia đang dần lắng lại, chỉ còn hình bóng em trong tâm trí anh. Dù công việc hay cuộc sống có bận rộn đến đâu, chỉ cần biết em vẫn bình yên là anh thấy hạnh phúc rồi.\n\nAnh ước mình có thể ở đó, chăm chút cho em từng bữa ăn giấc ngủ, nhưng vì chưa thể, anh sẽ luôn là người lắng nghe và ủng hộ em từ xa.Đừng quá áp lực nhé, có chuyện gì cũng hãy chia sẻ cùng anh. \n\n Thế giới này dù có giông bão, thì bên cạnh anh vẫn luôn là khoảng trời bình lặng dành riêng cho em. Giữ sức khỏe thật tốt nhé, bé yêu của anh!"
+        const fullText = "Chào công chúa nhỏ,\n\nGiữa thế giới bộn bề, chỉ cần nghĩ đến em là mọi lo toan trong anh đều tan biến. Anh không ở cạnh để chăm sóc em mỗi ngày, nhưng trái tim anh luôn dành một khoảng lặng bình yên nhất để lắng nghe em.\n\nĐừng quá áp lực nhé, giông bão ngoài kia cứ để anh gánh, bên anh luôn là khoảng trời dịu dàng dành riêng cho em. Giữ sức khỏe thật tốt, bé yêu của anh nhé!"
         let isUniverseMode = false;
 
         function transitionScreen(fromId, toId) {
@@ -292,45 +300,44 @@
                 k++;
                 setTimeout(typeWriter, 40);
             } else {
-                // VIẾT XONG THƯ -> TÊN LỬA KÉO MÀN HÌNH LÊN
                 setTimeout(() => {
-                    const letter = document.getElementById("letter");
-                    letter.style.opacity = "0"; // Ẩn thư trước
+                    const rocket = document.getElementById("pull-rocket");
+                    rocket.style.display = "block";
+                    rocket.style.animation = "rocketUp 2.5s cubic-bezier(0.19, 1, 0.22, 1) forwards";
                     
-                    setTimeout(() => {
-                        letter.style.display = "none";
-                        
-                        // Kích hoạt quả tên lửa lớn phóng từ dưới lên kéo theo vũ trụ
-                        const rocket = document.getElementById("pull-rocket");
-                        rocket.style.display = "block";
-                        rocket.style.animation = "rocketUp 2.5s cubic-bezier(0.19, 1, 0.22, 1) forwards";
-                        
-                        // Kéo dải ngân hà lên cùng tốc độ tên lửa
-                        const curtain = document.getElementById("universe-curtain");
-                        curtain.style.top = "0%";
-                        
-                        // Rải các ngôi sao vào dải ngân hà
-                        for (let i = 0; i < 60; i++) {
-                            const star = document.createElement('div');
-                            star.className = 'star';
-                            const size = Math.random() * 3 + 1;
-                            star.style.width = size + 'px';
-                            star.style.height = size + 'px';
-                            star.style.left = Math.random() * 100 + 'vw';
-                            star.style.top = Math.random() * 100 + 'vh';
-                            star.style.animationDuration = (Math.random() * 2 + 1) + 's';
-                            star.style.animationDelay = Math.random() * 2 + 's';
-                            curtain.appendChild(star);
-                        }
+                    const curtain = document.getElementById("universe-curtain");
+                    curtain.style.top = "0%";
+                    
+                    // Kéo khung thư bay lên cùng tên lửa
+                    const letter = document.getElementById("letter");
+                    letter.classList.remove("pop-in");
+                    letter.classList.add("slide-up-out");
+                    
+                    for (let i = 0; i < 60; i++) {
+                        const star = document.createElement('div');
+                        star.className = 'star';
+                        const size = Math.random() * 3 + 1;
+                        star.style.width = size + 'px';
+                        star.style.height = size + 'px';
+                        star.style.left = Math.random() * 100 + 'vw';
+                        star.style.top = Math.random() * 100 + 'vh';
+                        star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                        star.style.animationDelay = Math.random() * 2 + 's';
+                        curtain.appendChild(star);
+                    }
 
-                        // Sau khi kéo màn kết thúc hoàn tất
-                        setTimeout(() => {
-                            isUniverseMode = true; 
-                            showControlsPanel();
-                            startFinale();
-                        }, 2200);
-                    }, 400);
-                }, 2000);
+                    setTimeout(() => {
+                        isUniverseMode = true; 
+                        
+                        // Ẩn hẳn và chuẩn bị cấu trúc sạch để có thể xem lại thư về sau
+                        letter.style.display = "none"; 
+                        letter.classList.remove("slide-up-out");
+                        letter.style.transform = "translateY(0)";
+
+                        showControlsPanel(); 
+                        startFinale();       
+                    }, 2500);
+                }, 2000); 
             }
         }
 
@@ -340,7 +347,6 @@
             setTimeout(() => { panel.style.opacity = '1'; }, 50);
         }
 
-        // ĐIỀU HƯỚNG HIỆU ỨNG RƠI HOA ĐÀO (ĐẦU) HOẶC TÊN LỬA BAY LÊN (SAU)
         function createDynamicItems() {
             if (!isUniverseMode) {
                 const el = document.createElement('div');
@@ -353,7 +359,6 @@
                 document.body.appendChild(el);
                 setTimeout(() => el.remove(), 8000);
             } else {
-                // Hiệu ứng tên lửa liên tục bay vút từ dưới lên giống hoa đào rơi xuống
                 const rocket = document.createElement('div');
                 rocket.className = 'rising-item';
                 const spaceIcons = ['🚀', '✨', '⭐', '💫', '🔥'];
@@ -369,6 +374,7 @@
 
         function startFinale() {
             const heart = document.getElementById("heart-center");
+            heart.style.display = "block"; 
             heart.style.opacity = "1";
             heart.classList.add("heart-beat");
             
@@ -379,7 +385,6 @@
                 setTimeout(() => {
                     heart.style.display = "none";
                     
-                    // Hiển thị hai câu tỏ tình (mặc định ban đầu ẩn khung thư nên hiện chữ)
                     document.getElementById("love-text").classList.add("text-active");
                     setTimeout(() => {
                         document.getElementById("love-text1").classList.add("text-active");
@@ -390,7 +395,6 @@
             }, 2000);
         } 
 
-        // LOGIC BẬT TẮT KHUNG THƯ VÀ ĐỒNG BỘ ẨN HIỆN CHỮ TỎ TÌNH
         function toggleLetterFrame() {
             const letter = document.getElementById("letter");
             const t1 = document.getElementById("love-text");
@@ -398,20 +402,22 @@
             const label = document.getElementById("label-toggle");
 
             if (letter.style.display === "none" || letter.style.display === "") {
-                // BẬT KHUNG THƯ -> Ẩn chữ "làm người yêu anh nhé và yêu em"
                 t1.classList.remove("text-active");
                 t2.classList.remove("text-active");
+                
+                letter.classList.remove("pop-in");
+                letter.classList.remove("slide-up-out");
+                letter.style.transform = "translateY(0)"; // Trả khung thư về giữa khi ấn xem lại
                 
                 letter.style.display = "flex";
                 setTimeout(() => { letter.style.opacity = "1"; }, 50);
                 label.innerText = "Ẩn Khung Thư";
             } else {
-                // ẨN KHUNG THƯ -> Hiện lại chữ "làm người yêu anh nhé và yêu em"
                 letter.style.opacity = "0";
                 setTimeout(() => { 
                     letter.style.display = "none"; 
                     t1.classList.add("text-active");
-                    setTimeout(() => { t2.classList.add("text-active"); }, 300);
+                    setTimeout(() => { t2.classList.add("text-active"); }, 500);
                 }, 500);
                 label.innerText = "Xem Lại Thư";
             }
