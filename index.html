@@ -8,25 +8,23 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body { margin: 0; background: #ffe1e6; min-height: 100vh; display: flex; justify-content: center; align-items: center; font-family: sans-serif; overflow: hidden; }
-        .envelope { background: white; width: 350px; height: 350px; padding: 25px; border-radius: 20px; border: 2px solid #ff80ab; box-shadow: 0 5px 15px rgba(255, 128, 171, 0.4); display: flex; flex-direction: column; position: relative; z-index: 2; box-sizing: border-box; background-image: url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'); background-position: -5px -5px, calc(100% + 5px) -5px, -5px calc(100% + 5px), calc(100% + 5px) calc(100% + 5px); background-repeat: no-repeat; background-size: 30px;opacity: 0; }
+        
+        /* CẤU TRÚC LÁ THƯ */
+        .envelope { background: white; width: 350px; height: 350px; padding: 25px; border-radius: 20px; border: 2px solid #ff80ab; box-shadow: 0 5px 15px rgba(255, 128, 171, 0.4); display: flex; flex-direction: column; position: relative; z-index: 2; box-sizing: border-box; background-image: url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'), url('https://img.icons8.com/color/48/000000/sakura.png'); background-position: -5px -5px, calc(100% + 5px) -5px, -5px calc(100% + 5px), calc(100% + 5px) calc(100% + 5px); background-repeat: no-repeat; background-size: 30px; opacity: 0; }
         .screen { display: none; flex-direction: column; align-items: center; justify-content: center; position: absolute; width: 100%; transition: opacity 0.8s ease-in-out; opacity: 0; z-index: 10; }
         .screen.active { display: flex; opacity: 1; }
+        
         h2 { color: #d63384; text-align: center; font-size: 18px; margin: 0 0 15px 0; }
         #scroll-container { flex-grow: 1; overflow-y: auto; padding-right: 5px; margin-bottom: 10px; scroll-behavior: smooth; }
         #text { color: #881337; line-height: 1.5; font-size: 15px; white-space: pre-wrap; }
         .footer-area { border-top: 1px dashed #ff80ab; padding-top: 10px; }
         .signature { text-align: right; font-weight: bold; color: #d63384; font-size: 14px; }
         .music-bar { margin-top: 8px; color: #d63384; font-size: 12px; }
-        #heart-center { position: fixed; font-size: 100px; z-index: 99; opacity: 0; transition: opacity 2s ease-in; filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.8)); pointer-events: none; }
-        .heart-beat { animation: heartbeat 1.2s ease-in-out infinite; }
-        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 25% { transform: scale(1.2); } }
+        
+        /* CÁC THÀNH PHẦN BOX & TRANG TRÍ CHUNG */
         .box { background: #fff8f8; padding: 30px; border-radius: 20px; border: 1px solid #ff80ab; text-align: left; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 350px; position: relative; display: flex; flex-direction: column; }
         h1, h3 { color: #d63384; margin-bottom: 15px; text-align: center; }
         input { padding: 12px; width: 90%; border-radius: 8px; border: 1px solid #ffb6c1; margin: 10px 0; align-self: center; }
-        #love-text { position: fixed; z-index: 100; font-size: 50px; color: #d63384; font-weight: bold; opacity: 0; pointer-events: none; }
-        #love-text1 { position: fixed; z-index: 100; font-size: 50px; color: #d63384; font-weight: bold; opacity: 0; pointer-events: none; }
-        .grow-fade { animation: growAndFade 3s ease-out forwards; }
-        @keyframes growAndFade { 0% { transform: scale(0.5); opacity: 0; } 50% { transform: scale(1.5); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
         button { padding: 10px 25px; background: #ff80ab; color: white; border: none; border-radius: 8px; cursor: pointer; align-self: flex-start; }
         .note-text { font-size: 12px; color: #aaa; margin-bottom: 10px; align-self: flex-start; }
 
@@ -34,50 +32,43 @@
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         .d1 { top: 15%; left: 15%; } .d2 { top: 20%; right: 10%; } .d3 { bottom: 20%; left: 10%; } .d4 { bottom: 15%; right: 15%; }
         
-        /* Hiệu ứng rơi */
+        /* HIỆU ỨNG RƠI */
         .falling-item { position: fixed; top: -50px; z-index: 1; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        /* CẤU TRÚC NÚT CHAT NỔI BAO GỒM CHỮ (Đã cập nhật) */
-        .chat-wrapper {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            display: none; /* Ẩn mặc định */
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
-        .chat-trigger { 
-            font-size: 28px; 
-            cursor: pointer; 
-            background: white; 
-            padding: 10px; 
-            border-radius: 50%; 
-            box-shadow: 0 4px 12px rgba(255, 128, 171, 0.4); 
-            border: 2px solid #ff80ab; 
-            transition: transform 0.2s; 
-            display: flex;
-            align-items: center; 
-            justify-content: center; 
-            width: 45px; 
-            height: 45px; 
-            box-sizing: border-box; 
-        }
-        .chat-trigger:hover { transform: scale(1.1); }
-        .chat-label {
-            font-size: 10px;
-            color: #d63384;
-            font-weight: bold;
-            margin-top: 5px;
-            pointer-events: none;
-            text-align: center;
-        }
+        /* --- CSS CHO MÀN HÌNH LOADING CHUYẾN BAY MỚI --- */
+        .loading-box { background: #ffe1e6 !important; border: 2px solid #ffb6c1 !important; box-shadow: 0 10px 25px rgba(255, 128, 171, 0.3) !important; display: flex; flex-direction: column; align-items: center; width: 320px; }
+        .plane-img { font-size: 60px; margin-bottom: 10px; animation: fly-effect 2s infinite ease-in-out; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1)); }
+        @keyframes fly-effect { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(5deg); } }
         
-        /* Modal dùng chung cho Chat và Thông báo */
+        .heart-track { display: flex; gap: 6px; margin: 15px 0; padding-bottom: 10px; border-bottom: 1px dashed #ff80ab; }
+        .heart-dot { font-size: 18px; color: #ffccd5; transition: all 0.4s ease; }
+        .heart-dot.active { color: #ff3366; transform: scale(1.4); text-shadow: 0 0 8px #ff80ab; }
+        
+        .loading-title { color: #d63384; font-weight: 700; font-size: 16px; margin-top: 5px; text-align: center; }
+
+        /* --- HIỆU ỨNG CHUYỂN CẢNH SIÊU MƯỢT --- */
+        .fly-away { animation: flyAway 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
+        @keyframes flyAway { 0% { transform: scale(1) translateY(0); opacity: 1; } 100% { transform: scale(0.5) translateY(-200px); opacity: 0; } }
+
+        .pop-in { display: flex !important; animation: popIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes popIn { 0% { transform: scale(0.4) translateY(150px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+
+        /* HIỆU ỨNG CUỐI CÙNG SAU KHI ĐỌC THƯ */
+        #heart-center { position: fixed; font-size: 100px; z-index: 99; opacity: 0; transition: opacity 2s ease-in; filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.8)); pointer-events: none; }
+        .heart-beat { animation: heartbeat 1.2s ease-in-out infinite; }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 25% { transform: scale(1.2); } }
+        
+        #love-text, #love-text1 { position: fixed; z-index: 100; font-size: 50px; color: #d63384; font-weight: bold; opacity: 0; pointer-events: none; }
+        .grow-fade { animation: growAndFade 3s ease-out forwards; }
+        @keyframes growAndFade { 0% { transform: scale(0.5); opacity: 0; } 50% { transform: scale(1.5); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+
+        /* NÚT CHAT VÀ THÔNG BÁO */
+        .chat-wrapper { position: fixed; bottom: 20px; right: 20px; z-index: 999; display: flex; flex-direction: column; align-items: center; display: none; opacity: 0; transition: opacity 0.8s ease-in-out; }
+        .chat-trigger { font-size: 28px; cursor: pointer; background: white; padding: 10px; border-radius: 50%; box-shadow: 0 4px 12px rgba(255, 128, 171, 0.4); border: 2px solid #ff80ab; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; box-sizing: border-box; }
+        .chat-trigger:hover { transform: scale(1.1); }
+        .chat-label { font-size: 10px; color: #d63384; font-weight: bold; margin-top: 5px; pointer-events: none; text-align: center; }
+        
         .chat-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; }
         .chat-modal.active { display: flex; opacity: 1; }
         .chat-content { background: #fff8f8; border: 2px solid #ff80ab; padding: 25px; border-radius: 20px; width: 310px; text-align: center; box-shadow: 0 10px 25px rgba(255, 128, 171, 0.2); box-sizing: border-box; }
@@ -88,8 +79,6 @@
         .chat-btn-group { display: flex; gap: 10px; justify-content: center; width: 100%; }
         .chat-btn-send { padding: 10px 20px; background: #ff80ab; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; flex: 1; font-size: 14px; }
         .chat-btn-close { padding: 10px 20px; background: #ffe1e6; color: #d63384; border: 1px solid #ffb6c1; border-radius: 8px; cursor: pointer; flex: 1; font-size: 14px; }
-        
-        /* CSS cho nút trong popup thông báo thành công */
         .ok-btn { padding: 10px 25px; background: #ff80ab; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; box-sizing: border-box; margin-top: 10px; }
         .ok-btn:hover { background: #d63384; }
     </style>
@@ -117,12 +106,22 @@
     </div>
 
     <div id="loading-screen" class="screen">
-        <div class="box" style="text-align: center;">
-            <h2 id="loading-text" style="color: #d63384;">LOADING LOVE ... 0%</h2>
-            <div style="width: 100%; height: 20px; background: #ffe1e6; border-radius: 10px; overflow: hidden; margin: 10px 0;">
-                <div id="progress-bar" style="width: 0%; height: 100%; background: #ff80ab; transition: width 2s;"></div>
+        <div class="box loading-box">
+            <div class="plane-img">ε(´｡•᎑•`)💕</div>
+            
+            <div class="heart-track" id="heart-container">
+                <span class="heart-dot">❤️</span><span class="heart-dot">❤️</span>
+                <span class="heart-dot">❤️</span><span class="heart-dot">❤️</span>
+                <span class="heart-dot">❤️</span><span class="heart-dot">❤️</span>
+                <span class="heart-dot">❤️</span><span class="heart-dot">❤️</span>
+                <span class="heart-dot">❤️</span><span class="heart-dot">❤️</span>
             </div>
-            <button id="finish-btn" style="display: none; align-self: center;" onclick="finishLoading()">Bấm vào đây nè 🎀</button>
+            
+            <div id="loading-text" class="loading-title">Khởi động yêu thương... 0%</div>
+            
+            <button id="finish-btn" style="display: none; margin-top: 20px; background: #d63384; border:none; color:white; padding: 10px 20px; border-radius: 8px; cursor:pointer; margin-left: 75px;" onclick="finishLoading()">
+                   Ở đây nè cục dàng 🎀
+            </button>
         </div>
     </div>
     
@@ -141,7 +140,7 @@
 
     <div class="chat-wrapper" id="chat-container">
         <div class="chat-trigger" onclick="toggleChat(true)">💬</div>
-        <div class="chat-label">Viết tâm tư của bạn vào đây</div>
+        <div class="chat-label">Nhắn Nhủ Cho Anh :3</div>
     </div>
 
     <div id="chat-modal" class="chat-modal">
@@ -165,8 +164,8 @@
     </div>
 
     <script>
-    const audio = document.getElementById("myAudio");
-    audio.volume = 1; 
+        const audio = document.getElementById("myAudio");
+        audio.volume = 1; 
         const fullText = "Chào công chúa nhỏ,\n\n Anh viết những dòng này khi thế giới ngoài kia đang dần lắng lại, chỉ còn hình bóng em trong tâm trí anh. Dù công việc hay cuộc sống có bận rộn đến đâu, chỉ cần biết em vẫn bình yên là anh thấy hạnh phúc rồi.\n\nAnh ước mình có thể ở đó, chăm chút cho em từng bữa ăn giấc ngủ, nhưng vì chưa thể, anh sẽ luôn là người lắng nghe và ủng hộ em từ xa.Đừng quá áp lực nhé, có chuyện gì cũng hãy chia sẻ cùng anh. \n\n Thế giới này dù có giông bão, thì bên cạnh anh vẫn luôn là khoảng trời bình lặng dành riêng cho em. Giữ sức khỏe thật tốt nhé, bé yêu của anh!"
         
         function transitionScreen(fromId, toId) {
@@ -179,10 +178,75 @@
                 setTimeout(() => { to.style.opacity = '1'; }, 50);
             }, 800);
         }
+
         function checkPass() {
-                transitionScreen('login-screen', 'loading-screen');
-                startLoading();
+            transitionScreen('login-screen', 'loading-screen');
+            startLoading();
         }
+
+        // HÀM LOADING MỚI ĐÃ ĐƯỢC CẬP NHẬT
+        function startLoading() {
+            let progress = 0;
+            const text = document.getElementById('loading-text');
+            const hearts = document.querySelectorAll('.heart-dot');
+            const btn = document.getElementById('finish-btn');
+            
+            const interval = setInterval(() => {
+                progress += 1; 
+                
+                // Cập nhật lời nhắn theo từng giai đoạn
+                if (progress <= 20) {
+                    text.innerText = `Khởi động yêu thương❤️.. ${progress}%`;
+                } else if (progress <= 50) {
+                    text.innerText = `Đang gói ghém nỗi nhớ... ${progress}%`;
+                } else if (progress <= 80) {
+                    text.innerText = `Hành trình về phía em... ${progress}%`;
+                } else if (progress < 100) {
+                    text.innerText = `Sắp đến nơi rồi ❤️❤️... ${progress}%`;
+                } else {
+                    text.innerText = "Đã đến nơi! Yêu em trọn vẹn ❤️";
+                    btn.style.display = "inline-block";
+                    clearInterval(interval);
+                }
+                
+                // Cập nhật trái tim
+                let index = Math.floor((progress - 1) / 10);
+                if (index >= 0 && index < hearts.length) {
+                    hearts[index].classList.add('active');
+                }
+            }, 50); 
+        }
+
+        function finishLoading() {
+            const loadingScreen = document.getElementById('loading-screen');
+            const loadingBox = loadingScreen.querySelector('.loading-box');
+            const letter = document.getElementById('letter');
+
+            loadingBox.classList.add('fly-away');
+
+            setTimeout(() => {
+                loadingScreen.classList.remove('active');
+                loadingScreen.style.display = 'none';
+
+                letter.hidden = false;
+                letter.classList.add('pop-in');
+
+                confetti({
+                    particleCount: 70,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#ff80ab', '#ffb6c1', '#ffffff', '#d63384'],
+                    shapes: ['circle', 'square']
+                });
+
+                setTimeout(() => {
+                    typeWriter();
+                    showChatIcon();
+                }, 800);
+
+            }, 1000); 
+        }
+
         let k = 0;
         function typeWriter() {
             if (k < fullText.length) {
@@ -196,37 +260,7 @@
                 startFinale();
             }
         }
-        
-        function startLoading() {
-            let progress = 0;
-            const bar = document.getElementById('progress-bar');
-            const text = document.getElementById('loading-text');
-            const btn = document.getElementById('finish-btn');
-            const interval = setInterval(() => {
-                progress += 2;
-                bar.style.width = progress + '%';
-                text.innerText = "LOADING LOVE ... " + progress + "%";
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    text.innerText = "Xong rồi nè! ❤️";
-                    btn.style.display = "inline-block";
-                }
-            }, 100);
-        }
 
-        function finishLoading() {
-            const screen = document.getElementById('loading-screen');
-            screen.style.transition = "opacity 1s ease";
-            screen.style.opacity = "0";
-            setTimeout(() => { 
-                transitionScreen('loading-screen','letter');
-                typeWriter(); 
-                // Kích hoạt hiển thị nút chát ngay khi bắt đầu vào màn hình bức thư
-                showChatIcon(); 
-            }, 2000);
-        }
-
-        // Hàm xử lý xuất hiện mượt mà của bộ nút chat + chữ
         function showChatIcon() {
             const chatContainer = document.getElementById('chat-container');
             chatContainer.style.display = 'flex';
@@ -248,9 +282,8 @@
         }
         setInterval(createFallingItem, 500);
 
-     function startFinale() {
+        function startFinale() {
             const heart = document.getElementById("heart-center");
-            const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
             heart.style.opacity = "1";
             heart.classList.add("heart-beat");
             setTimeout(() => {
@@ -258,10 +291,11 @@
                 document.getElementById("love-text").classList.add("grow-fade");
                 setTimeout(() => {
                     document.getElementById("love-text1").classList.add("grow-fade");
-                    }, 2000);
+                }, 2000);
                 triggerFireworks();
             }, 3000);
-        }
+        } 
+
         function triggerFireworks() {
             const end = Date.now() + 3000;
             const colors = ['#ff4d4d', '#ff94c2', '#ffccd5'];
@@ -272,91 +306,76 @@
             }());
         }
         
-    const playlist = [
-        "audio/chieudanbun.mp3"
-    ];
+        const playlist = ["audio/chieudanbun.mp3"];
 
-    function playRandomMusic() {
-        const audio = document.getElementById("myAudio");
-        const randomSong = playlist[Math.floor(Math.random() * playlist.length)];
-        
-        audio.src = randomSong;
-        audio.loop = false; 
-        
-        audio.play().catch(e => {
-            console.log("Trình duyệt chặn, cần click vào trang để phát.");
-            document.addEventListener('click', () => {
-                audio.play();
-            }, { once: true });
-        });
-    }
-
-    window.onload = () => {
-        setTimeout(playRandomMusic, 1000);
-    };
-
-    /* CÁC HÀM XỬ LÝ CHAT VÀ GỬI WEBHOOK DISCORD */
-    function toggleChat(show) {
-        const modal = document.getElementById('chat-modal');
-        if (show) {
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('active'), 10);
-        } else {
-            modal.classList.remove('active');
-            setTimeout(() => modal.style.display = 'none', 400);
-        }
-    }
-
-    function toggleNotification(show) {
-        const modal = document.getElementById('notification-modal');
-        if (show) {
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('active'), 10);
-        } else {
-            modal.classList.remove('active');
-            setTimeout(() => modal.style.display = 'none', 400);
-        }
-    }
-
-    function sendReply() {
-        const msg = document.getElementById("reply-msg").value.trim();
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1512740637693317241/Q0GW0cVEZLr2Kv8Vv-lt6N5pGzHWoScwupXrZouAoOKfUr0AElhjlRZXYKi1UABDjo4N"; 
-        
-        if(!msg) {
-            alert("Cậu chưa viết gì vào ô cả nha!");
-            return;
+        function playRandomMusic() {
+            const audio = document.getElementById("myAudio");
+            const randomSong = playlist[Math.floor(Math.random() * playlist.length)];
+            audio.src = randomSong;
+            audio.loop = false; 
+            audio.play().catch(e => {
+                console.log("Trình duyệt chặn, cần click vào trang để phát.");
+                document.addEventListener('click', () => { audio.play(); }, { once: true });
+            });
         }
 
-        const currentTime = new Date().toLocaleString("vi-VN");
-        const ticks = "```";
-        
-        // ĐỊNH DẠNG RICH EMBED SANG TRỌNG
-        const payload = {
-            embeds: [{
-                title: "💌 Tâm tư người đọc:",
-                color: 16744619, // Mã màu hồng đậm của trái tim
-                description: ticks + "\n" + msg + "\n" + ticks,
-                footer: {
-                    text: "Gửi lúc: " + currentTime
-                }
-            }]
-        };
-        
-        fetch(WEBHOOK_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        }).then(() => { 
-            toggleChat(false); 
-            document.getElementById("reply-msg").value = ""; 
-            // HIỆN THỊ BẢNG THÔNG BÁO TỰ CHẾ THAY VÌ ALERT PHÁ VỠ GIAO DIỆN
-            setTimeout(() => {
-                toggleNotification(true);
-            }, 300);
-        }).catch(err => {
-            alert("Có lỗi khi gửi tin nhắn, cậu kiểm tra lại kết nối mạng nhé!");
-        });
-    }
+        window.onload = () => { setTimeout(playRandomMusic, 1000); };
+
+        function toggleChat(show) {
+            const modal = document.getElementById('chat-modal');
+            if (show) {
+                modal.style.display = 'flex';
+                setTimeout(() => modal.classList.add('active'), 10);
+            } else {
+                modal.classList.remove('active');
+                setTimeout(() => modal.style.display = 'none', 400);
+            }
+        }
+
+        function toggleNotification(show) {
+            const modal = document.getElementById('notification-modal');
+            if (show) {
+                modal.style.display = 'flex';
+                setTimeout(() => modal.classList.add('active'), 10);
+            } else {
+                modal.classList.remove('active');
+                setTimeout(() => modal.style.display = 'none', 400);
+            }
+        }
+
+        function sendReply() {
+            const msg = document.getElementById("reply-msg").value.trim();
+            const WEBHOOK_URL = "https://discord.com/api/webhooks/1512740637693317241/Q0GW0cVEZLr2Kv8Vv-lt6N5pGzHWoScwupXrZouAoOKfUr0AElhjlRZXYKi1UABDjo4N"; 
+            
+            if(!msg) {
+                alert("Cậu chưa viết gì vào ô cả nha!");
+                return;
+            }
+
+            const currentTime = new Date().toLocaleString("vi-VN");
+            const ticks = "```";
+            
+            const payload = {
+                embeds: [{
+                    title: "💌 Tâm tư người đọc:",
+                    color: 16744619, 
+                    description: ticks + "\n" + msg + "\n" + ticks,
+                    footer: { text: "Gửi lúc: " + currentTime }
+                }]
+            };
+            
+            fetch(WEBHOOK_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).then(() => { 
+                toggleChat(false); 
+                document.getElementById("reply-msg").value = ""; 
+                setTimeout(() => { toggleNotification(true); }, 300);
+            }).catch(err => {
+                alert("Có lỗi khi gửi tin nhắn, cậu kiểm tra lại kết nối mạng nhé!");
+            });
+        }
     </script>
 </body>
 </html>
