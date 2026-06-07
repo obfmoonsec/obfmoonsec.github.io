@@ -38,22 +38,29 @@
         .falling-item { position: fixed; top: -50px; z-index: 1; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        /* CẤU TRÚC NÚT CHAT NỔI (Đã ẩn mặc định và tích hợp hiệu ứng chuyển động mượt mà) */
+        /* CẤU TRÚC NÚT CHAT NỔI BAO GỒM CHỮ (Đã cập nhật) */
+        .chat-wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            display: none; /* Ẩn mặc định */
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
         .chat-trigger { 
-            position: fixed; 
-            bottom: 20px; 
-            right: 20px; 
             font-size: 28px; 
             cursor: pointer; 
-            z-index: 999; 
             background: white; 
             padding: 10px; 
             border-radius: 50%; 
             box-shadow: 0 4px 12px rgba(255, 128, 171, 0.4); 
             border: 2px solid #ff80ab; 
-            transition: transform 0.2s, opacity 0.8s ease-in-out; 
-            display: none; /* Ẩn đi khi mới bắt đầu chạy trang web */
-            opacity: 0;    /* Ban đầu trong suốt để có hiệu ứng fade-in mượt */
+            transition: transform 0.2s; 
+            display: flex;
             align-items: center; 
             justify-content: center; 
             width: 45px; 
@@ -61,6 +68,14 @@
             box-sizing: border-box; 
         }
         .chat-trigger:hover { transform: scale(1.1); }
+        .chat-label {
+            font-size: 10px;
+            color: #d63384;
+            font-weight: bold;
+            margin-top: 5px;
+            pointer-events: none;
+            text-align: center;
+        }
         
         /* Modal dùng chung cho Chat và Thông báo */
         .chat-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; }
@@ -124,8 +139,11 @@
     <div id="love-text">I Love You!</div>
     <div id="love-text1">Rất Nhiều</div>
 
-    <!-- KHUNG CHAT NỔI (Sẽ được gọi hiển thị bằng JavaScript khi vào đúng bước đọc thư) -->
-    <div class="chat-trigger" id="chat-icon" onclick="toggleChat(true)">💬</div>
+    <div class="chat-wrapper" id="chat-container">
+        <div class="chat-trigger" onclick="toggleChat(true)">💬</div>
+        <div class="chat-label">Viết tâm tư của bạn vào đây</div>
+    </div>
+
     <div id="chat-modal" class="chat-modal">
         <div class="chat-content">
             <h3>Gửi tâm tư cho Mạnh Dũng 💕</h3>
@@ -137,7 +155,6 @@
         </div>
     </div>
 
-    <!-- KHUNG THÔNG BÁO TỰ CHẾ SAU KHI GỬI THÀNH CÔNG -->
     <div id="notification-modal" class="chat-modal">
         <div class="chat-content" style="width: 280px; padding: 20px;">
             <span style="font-size: 40px;">💖</span>
@@ -204,17 +221,17 @@
             setTimeout(() => { 
                 transitionScreen('loading-screen','letter');
                 typeWriter(); 
-                // Kích hoạt hiển thị nút chát ngay khi bắt đầu vào màn hình bức thư (đúng bước này)
+                // Kích hoạt hiển thị nút chát ngay khi bắt đầu vào màn hình bức thư
                 showChatIcon(); 
             }, 2000);
         }
 
-        // Hàm xử lý xuất hiện mượt mà của nút chat ở bước cuối cùng
+        // Hàm xử lý xuất hiện mượt mà của bộ nút chat + chữ
         function showChatIcon() {
-            const chatIcon = document.getElementById('chat-icon');
-            chatIcon.style.display = 'flex';
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.style.display = 'flex';
             setTimeout(() => {
-                chatIcon.style.opacity = '1';
+                chatContainer.style.opacity = '1';
             }, 50);
         }
 
@@ -313,7 +330,7 @@
         const currentTime = new Date().toLocaleString("vi-VN");
         const ticks = "```";
         
-        // ĐỊNH DẠNG RICH EMBED SANG TRỌNG GIỐNG HÌNH ẢNH BẠN GỬI
+        // ĐỊNH DẠNG RICH EMBED SANG TRỌNG
         const payload = {
             embeds: [{
                 title: "💌 Tâm tư người đọc:",
