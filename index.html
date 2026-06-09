@@ -31,10 +31,8 @@
             z-index: 0;
             pointer-events: none;
         }
-        body::before { top: 10%; left: 15%;
-            animation: floatGlow 15s ease-in-out infinite alternate; }
-        body::after { bottom: 10%; right: 15%;
-            animation: floatGlow 20s ease-in-out infinite alternate-reverse; }
+        body::before { top: 10%; left: 15%; animation: floatGlow 15s ease-in-out infinite alternate; }
+        body::after { bottom: 10%; right: 15%; animation: floatGlow 20s ease-in-out infinite alternate-reverse; }
         
         @keyframes floatGlow {
             0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
@@ -53,7 +51,8 @@
             z-index: 10;
         }
         .screen.active { 
-            display: flex; 
+            display: flex;
+            opacity: 1; 
         }
         
         .box, .envelope { 
@@ -86,15 +85,13 @@
         .music-bar { margin-top: 8px; color: #5b21b6; font-size: 11px; letter-spacing: 1px; text-align: right; padding-right: 10px; }
         
         input { 
-            padding: 12px;
-            width: 100%; border-radius: 10px; border: 1px solid rgba(168, 85, 247, 0.2); background: rgba(0, 0, 0, 0.4); color: #f5f3ff;
+            padding: 12px; width: 100%; border-radius: 10px; border: 1px solid rgba(168, 85, 247, 0.2); background: rgba(0, 0, 0, 0.4); color: #f5f3ff;
             margin: 12px 0; align-self: center; box-sizing: border-box; outline: none; text-align: center; font-size: 14px;
         }
         input:focus { border-color: rgba(168, 85, 247, 0.4); background: rgba(0, 0, 0, 0.5); }
         
         button { 
-            padding: 12px 25px;
-            background: rgba(168, 85, 247, 0.15); color: #f5f3ff; border: 1px solid rgba(168, 85, 247, 0.25); border-radius: 10px; cursor: pointer; align-self: flex-start;
+            padding: 12px 25px; background: rgba(168, 85, 247, 0.15); color: #f5f3ff; border: 1px solid rgba(168, 85, 247, 0.25); border-radius: 10px; cursor: pointer; align-self: flex-start;
             font-weight: bold; transition: all 0.3s; width: 100%; text-align: center; font-size: 14px;
         }
         button:hover { background: rgba(168, 85, 247, 0.25); border-color: rgba(168, 85, 247, 0.4); }
@@ -135,16 +132,8 @@
 
         /* Sửa lỗi lệch tọa độ hoạt ảnh Finale */
         #heart-center { 
-            position: fixed; 
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 80px; 
-            z-index: 99; 
-            opacity: 0; 
-            transition: opacity 2s ease-in; 
-            pointer-events: none; 
-            filter: grayscale(50%); 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 80px; z-index: 99; opacity: 0; transition: opacity 2s ease-in; pointer-events: none; filter: grayscale(50%); 
         }
         .heart-beat { animation: heartbeat 2s ease-in-out infinite; }
         @keyframes heartbeat { 
@@ -153,21 +142,9 @@
         }
         
         #love-text, #love-text1 { 
-            position: fixed; 
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 100; 
-            font-size: 35px; 
-            color: #c084fc; 
-            font-weight: normal; 
-            opacity: 0; 
-            pointer-events: none; 
-            text-shadow: 0 0 10px rgba(0,0,0,0.8); 
-            text-align: center; 
-            font-family: serif; 
-            font-style: italic;
-            width: 100%;
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 100; font-size: 35px; color: #c084fc; font-weight: normal; opacity: 0; pointer-events: none; text-shadow: 0 0 10px rgba(0,0,0,0.8); 
+            text-align: center; font-family: serif; font-style: italic; width: 100%;
         }
         .grow-fade { animation: growAndFade 4s ease-out forwards; }
         @keyframes growAndFade { 
@@ -198,54 +175,77 @@
         .read-more-btn { display: inline-block; padding: 8px 22px; background: rgba(168, 85, 247, 0.15); color: #ddd6fe; border: 1px solid rgba(168, 85, 247, 0.35); border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.3s ease; font-size: 13px; width: auto; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
         .read-more-btn:hover { background: rgba(168, 85, 247, 0.35); border-color: rgba(168, 85, 247, 0.5); transform: scale(1.03); }
 
-        .falling-item { position: fixed; top: -50px; z-index: 1; animation: fall linear forwards; pointer-events: none; }
-        @keyframes fall { to { transform: translateY(110vh); } }
+        /* --- TỐI ƯU HIỆU ỨNG RƠI: Thêm Sway (lắc lư) và giảm Lag --- */
+        .falling-item { 
+            position: fixed; 
+            top: -50px; 
+            z-index: 1; 
+            pointer-events: none; 
+            will-change: transform, opacity; 
+            animation: fall linear forwards, sway ease-in-out infinite alternate;
+        }
+        @keyframes fall { 
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(115vh) rotate(360deg); } 
+        }
+        @keyframes sway {
+            0% { margin-left: -15px; }
+            100% { margin-left: 15px; }
+        }
 
-        /* =========================================
-           HIỆU ỨNG RÈM CỬA VÀ KỶ NIỆM
-           ========================================= */
+        /* ==========================================================
+           HIỆU ỨNG RÈM CỬA NHẬT BẢN (SHOJI) - PHIÊN BẢN ÁNH TÍM HUYỀN ẢO
+           ========================================================== */
         #curtain-container {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 2000; display: none; justify-content: center; align-items: center;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out; overflow: hidden;
+            opacity: 0; transition: opacity 1.5s ease-in-out; overflow: hidden;
         }
 
         .curtain {
-            position: absolute;
-            top: 0; width: 50vw; height: 100vh;
-            background: linear-gradient(to right, #0a0410, #1a0b2e);
-            box-shadow: 0 0 25px rgba(0,0,0,0.9);
+            position: absolute; top: 0; width: 50vw; height: 100vh;
+            /* CẢI TIẾN: Nền giấy gạo mờ tích hợp hiệu ứng tỏa sáng ánh tím từ tâm */
+            background: radial-gradient(circle at center, rgba(147, 51, 234, 0.28) 0%, rgba(13, 7, 23, 0.94) 100%);
+            background-image: 
+                linear-gradient(rgba(168, 85, 247, 0.12) 2px, transparent 2px), /* Ánh sáng hắt nhẹ trên vân giấy */
+                linear-gradient(#12071c 5px, transparent 5px), /* Hệ lưới gỗ ngang màu tím đen cực tối */
+                linear-gradient(90deg, #12071c 5px, transparent 5px); /* Hệ lưới gỗ dọc màu tím đen cực tối */
+            background-size: 100% 100%, 80px 120px, 80px 120px;
+            background-position: center top;
+            border: 12px solid #12071c; /* Khung gỗ Shoji lớn viền ngoài */
+            box-sizing: border-box;
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.9), 0 0 35px rgba(168, 85, 247, 0.25);
             transition: transform 2.5s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 2001;
         }
-        .left-curtain { left: 0; border-right: 1px solid rgba(168, 85, 247, 0.2); }
-        .right-curtain { right: 0; border-left: 1px solid rgba(168, 85, 247, 0.2); }
+        .left-curtain { left: 0; border-right: 6px solid #09030f; }
+        .right-curtain { right: 0; border-left: 6px solid #09030f; }
 
         .curtain-container-open .left-curtain { transform: translateX(-100%); }
         .curtain-container-open .right-curtain { transform: translateX(100%); }
 
-        /* Chiếc móc khóa kéo rèm */
+        /* Chiếc chuông gió (Furin) kéo rèm */
         .keychain-pull {
-            position: absolute;
-            z-index: 2002; top: -20px;
+            position: absolute; z-index: 2002; top: -20px;
             display: flex; flex-direction: column; align-items: center;
             cursor: pointer; transform-origin: top center;
             animation: swingCord 2.5s infinite ease-in-out alternate;
             transition: opacity 0.5s;
         }
         .keychain-pull:hover { animation-play-state: paused; transform: scale(1.05); filter: brightness(1.2); }
-        .cord { width: 3px; height: 180px; background: linear-gradient(to bottom, #4c1d95, #a78bfa); box-shadow: 0 0 8px #a78bfa; border-radius: 2px; }
-        .key-icon { font-size: 45px; filter: drop-shadow(0 5px 15px rgba(168,85,247,0.9)); margin-top: -15px; }
+        .cord { 
+            width: 3px; height: 180px; 
+            background: #902626; /* Sợi dây chuông gió màu đỏ đô truyền thống */
+            border-radius: 2px; box-shadow: 2px 2px 5px rgba(0,0,0,0.5); 
+        }
+        .key-icon { font-size: 45px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.8)); margin-top: -15px; }
         .key-text { color: #ddd6fe; font-size: 13px; margin-top: 15px; font-style: italic; opacity: 0.9; text-shadow: 0 0 5px #000; letter-spacing: 0.5px;}
 
         @keyframes swingCord { 0% { transform: rotate(4deg); } 100% { transform: rotate(-4deg); } }
 
         /* Thư viện ảnh Kỷ Niệm */
         .memories-gallery {
-            position: relative;
-            z-index: 2000; text-align: center;
+            position: relative; z-index: 2000; text-align: center;
             opacity: 0; transition: opacity 2s; transition-delay: 0.8s;
             display: flex; flex-direction: column; align-items: center;
             height: 85vh; width: 100vw; overflow-y: auto; overflow-x: hidden;
@@ -256,17 +256,23 @@
         
         .polaroid-grid { display: flex; gap: 25px; flex-wrap: wrap; justify-content: center; max-width: 900px; padding-bottom: 30px; }
         .polaroid { 
-            background: #fdfbf7;
-            padding: 12px 12px 25px 12px; border-radius: 4px; 
+            background: #fdfbf7; padding: 12px 12px 25px 12px; border-radius: 4px; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.8); transition: transform 0.4s ease, box-shadow 0.4s ease;
-            cursor: default;
+            cursor: pointer;
         }
         .polaroid:nth-child(odd) { transform: rotate(-3deg); }
         .polaroid:nth-child(even) { transform: rotate(4deg); }
         .polaroid:hover { transform: scale(1.08) rotate(0deg); z-index: 10; box-shadow: 0 20px 40px rgba(0,0,0,0.9); }
         
-        .polaroid .photo { width: 180px; height: 180px; background-color: #222; background-size: cover; background-position: center; border: 1px solid #ddd; }
-        .polaroid p { color: #1e293b; margin: 15px 0 0 0; font-family: 'Courier New', Courier, monospace; font-size: 14px; font-weight: bold; }
+        .polaroid .photo { width: 180px; height: 180px; background-color: #222; background-size: cover; background-position: center; border: 1px solid #ddd; pointer-events: none; }
+        .polaroid p { color: #1e293b; margin: 15px 0 0 0; font-family: 'Courier New', Courier, monospace; font-size: 14px; font-weight: bold; pointer-events: none; }
+        
+        /* Modal riêng dành cho hình ảnh */
+        .photo-modal-content {
+            background: rgba(24, 18, 36, 0.98); border: 1px solid rgba(168, 85, 247, 0.4);
+            padding: 20px; border-radius: 12px; width: 340px; max-width: 90%; text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9); box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
@@ -319,6 +325,15 @@
         </div>
     </div>
 
+    <div id="photo-modal" class="hint-modal" onclick="closePhotoModal(event)">
+        <div class="photo-modal-content" onclick="event.stopPropagation()">
+            <div id="modal-img" style="width: 100%; height: 250px; background-size: cover; background-position: center; border-radius: 8px; border: 1px solid #555;"></div>
+            <h3 id="modal-title" style="color: #d8b4fe; margin: 15px 0 10px 0; font-family: serif; font-style: italic;"></h3>
+            <p id="modal-desc" style="color: #cbd5e1; font-size: 13.5px; line-height: 1.6; text-align: justify; margin-bottom: 20px;"></p>
+            <button class="ok-btn" onclick="closePhotoModal()">Khép lại</button>
+        </div>
+    </div>
+
     <div id="loading-screen" class="screen">
         <div class="box loading-box">
             <div class="plane-img">🥀</div>
@@ -368,26 +383,26 @@
             <h3>Những Kỷ Niệm Từng Rất Đẹp...</h3>
             <div class="polaroid-grid">
                 
-                <div class="polaroid">
+                <div class="polaroid" onclick="openPhotoModal('https://via.placeholder.com/300/333/fff?text=Anh+1', 'Ngày bắt đầu...', 'Vẫn nhớ cái ngày ấy, lần đầu tiên đôi ta ngập ngừng trao nhau ánh mắt. Mọi thứ dường như mới mẻ và thật đẹp đẽ biết bao.')">
                     <div class="photo" style="background-image: url('https://via.placeholder.com/180/333/fff?text=Anh+1');"></div>
                     <p>Ngày bắt đầu...</p>
                 </div>
 
-                <div class="polaroid">
+                <div class="polaroid" onclick="openPhotoModal('https://via.placeholder.com/300/333/fff?text=Anh+2', 'Bình yên', 'Có những chiều hoàng hôn lặng lẽ, chỉ cần được ngồi cạnh em thôi cũng đủ khiến giông bão ngoài kia hóa thành tĩnh lặng.')">
                     <div class="photo" style="background-image: url('https://via.placeholder.com/180/333/fff?text=Anh+2');"></div>
                     <p>Bình yên</p>
                 </div>
 
-                <div class="polaroid">
+                <div class="polaroid" onclick="openPhotoModal('https://via.placeholder.com/300/333/fff?text=Anh+3', 'Nụ cười ấy', 'Nụ cười của em từng là điều rực rỡ nhất đánh thức trái tim lạnh lẽo của anh. Tiếc là giờ đây nó chỉ còn nằm lại trong những khung hình.')">
                     <div class="photo" style="background-image: url('https://via.placeholder.com/180/333/fff?text=Anh+3');"></div>
                     <p>Nụ cười ấy</p>
                 </div>
 
-                <div class="polaroid">
+                <div class="polaroid" onclick="openPhotoModal('https://via.placeholder.com/300/333/fff?text=Anh+4', 'Ký ức ngủ quên', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')">
                     <div class="photo" style="background-image: url('https://via.placeholder.com/180/333/fff?text=Anh+4');"></div>
                     <p>Ký ức ngủ quên</p>
                 </div>
-                 
+                
             </div>
             
             <button class="ok-btn" style="width: 250px; margin-top: 10px; background: rgba(168, 85, 247, 0.3);" onclick="closeMemories()">Khép lại quá khứ 🥀</button>
@@ -469,7 +484,6 @@
                 const currentHour = now.getHours();
                 const currentMinute = now.getMinutes();
                 
-                // Sửa logic: Chỉ cho phép truy cập từ 21:30 đêm đến 03:00 sáng hôm sau
                 if ((currentHour === 1 && currentMinute >= 30) || currentHour > 1 || currentHour < 3) {
                     sendWebhookMsg("🔓 Truy cập thành công", "Người được chọn đã nhập chính xác mật khẩu và đang xem thư.", 6184055);
                     transitionScreen('login-screen', 'loading-screen');
@@ -495,6 +509,22 @@
             const modal = document.getElementById('hint-modal');
             if (show) { modal.style.display = 'flex'; setTimeout(() => modal.classList.add('active'), 10); } 
             else { modal.classList.remove('active'); setTimeout(() => modal.style.display = 'none', 400); }
+        }
+
+        function openPhotoModal(imgUrl, title, desc) {
+            document.getElementById('modal-img').style.backgroundImage = `url('${imgUrl}')`;
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            
+            const modal = document.getElementById('photo-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('active'), 10);
+        }
+
+        function closePhotoModal(event) {
+            const modal = document.getElementById('photo-modal');
+            modal.classList.remove('active');
+            setTimeout(() => modal.style.display = 'none', 400);
         }
 
         function transitionScreen(fromId, toId) {
@@ -597,6 +627,7 @@
             setTimeout(() => { chatContainer.style.opacity = '1'; }, 50);
         }
 
+        /* TẠO ICON RƠI NGHỆ THUẬT - Không gây lag nền */
         function createFallingItem() {
             const el = document.createElement('div');
             el.className = 'falling-item';
@@ -605,13 +636,18 @@
             el.style.left = Math.random() * 100 + 'vw';
             const size = Math.random() * 12 + 14;
             el.style.fontSize = size + 'px';
-            el.style.opacity = (Math.random() * 0.3 + 0.15).toString(); 
+            el.style.opacity = (Math.random() * 0.25 + 0.15).toString(); 
             el.style.filter = size < 18 ? 'blur(1px)' : 'none';
-            el.style.animationDuration = (Math.random() * 5 + 7) + 's'; 
+            el.style.animationDuration = (Math.random() * 5 + 8) + 's'; 
+            
+            // Random độ lệch nhịp đu đưa tự nhiên
+            el.style.animationDelay = `${Math.random() * -5}s`;
+            
             document.body.appendChild(el);
-            setTimeout(() => el.remove(), 11000);
+            setTimeout(() => el.remove(), 13000);
         }
-        setInterval(createFallingItem, 400);
+        // Giản cách nhịp tạo sang 1500ms để màn hình thanh thoát, mượt mà
+        setInterval(createFallingItem, 1500);
 
         function startFinale() {
             const heart = document.getElementById("heart-center");
