@@ -100,7 +100,7 @@
         .hint-trigger { font-size: 12px; color: #6d28d9; text-decoration: underline; cursor: pointer; align-self: center; margin-bottom: 12px; transition: color 0.3s; }
         .hint-trigger:hover { color: #8b5cf6; }
         
-        /* Giao diện modal popup chung */
+        /* Giao diện popup */
         .hint-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4, 2, 8, 0.8); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; }
         .hint-modal.active { display: flex; opacity: 1; }
         .paper-note { background: rgba(24, 18, 36, 0.95); border: 1px dashed rgba(168, 85, 247, 0.3); padding: 25px; border-radius: 16px; width: 300px; text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.7); backdrop-filter: blur(8px); }
@@ -130,7 +130,6 @@
         .pop-in { display: flex !important; animation: fadeIn 1.5s ease forwards; }
         @keyframes fadeIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
 
-        /* Sửa lỗi lệch tọa độ hoạt ảnh Finale */
         #heart-center { 
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             font-size: 80px; z-index: 99; opacity: 0; transition: opacity 2s ease-in; pointer-events: none; filter: grayscale(50%); 
@@ -154,11 +153,16 @@
             100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0; } 
         }
 
-        /* NÚT CHAT VÀ THÔNG BÁO */
-        .chat-wrapper { position: fixed; bottom: 20px; right: 20px; z-index: 999; display: flex; flex-direction: column; align-items: center; display: none; opacity: 0; transition: opacity 1s ease-in-out; }
-        .chat-trigger { font-size: 24px; cursor: pointer; background: rgba(18, 12, 28, 0.8); padding: 10px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.5); border: 1px solid rgba(168, 85, 247, 0.4); transition: transform 0.3s; display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; box-sizing: border-box; backdrop-filter: blur(10px); }
-        .chat-trigger:hover { transform: scale(1.05); background: rgba(24, 18, 36, 0.9); }
-        .chat-label { font-size: 10px; color: #a78bfa; margin-top: 5px; pointer-events: none; text-align: center; }
+        /* --- NÚT ĐIỀU KHIỂN GÓC PHẢI --- */
+        .chat-wrapper { 
+            position: fixed; bottom: 20px; right: 20px; z-index: 999; 
+            display: none; flex-direction: row; gap: 15px; align-items: center; 
+            opacity: 0; transition: opacity 1s ease-in-out; 
+        }
+        .chat-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .chat-trigger { font-size: 24px; background: rgba(18, 12, 28, 0.8); padding: 10px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.5); border: 1px solid rgba(168, 85, 247, 0.4); transition: transform 0.3s; display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; box-sizing: border-box; backdrop-filter: blur(10px); }
+        .chat-item:hover .chat-trigger { transform: scale(1.05); background: rgba(24, 18, 36, 0.9); }
+        .chat-label { font-size: 10px; color: #a78bfa; margin-top: 5px; pointer-events: none; text-align: center; font-weight: bold; }
         
         .chat-content { background: rgba(24, 18, 36, 0.95); border: 1px solid rgba(168, 85, 247, 0.3); padding: 25px; border-radius: 16px; width: 360px; max-width: 90%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.7); box-sizing: border-box; backdrop-filter: blur(8px); }
         .chat-content h3 { color: #a78bfa; margin-top: 0; font-size: 16px; margin-bottom: 10px; font-weight: normal; }
@@ -175,13 +179,13 @@
         .read-more-btn { display: inline-block; padding: 8px 22px; background: rgba(168, 85, 247, 0.15); color: #ddd6fe; border: 1px solid rgba(168, 85, 247, 0.35); border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.3s ease; font-size: 13px; width: auto; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
         .read-more-btn:hover { background: rgba(168, 85, 247, 0.35); border-color: rgba(168, 85, 247, 0.5); transform: scale(1.03); }
 
-        /* --- TỐI ƯU HIỆU ỨNG RƠI: Thêm Sway (lắc lư) và giảm Lag --- */
+        /* --- TỐI ƯU HIỆU ỨNG RƠI (CHỐNG LAG) --- */
         .falling-item { 
             position: fixed; 
             top: -50px; 
             z-index: 1; 
             pointer-events: none; 
-            will-change: transform, opacity; 
+            will-change: transform; 
             animation: fall linear forwards, sway ease-in-out infinite alternate;
         }
         @keyframes fall { 
@@ -189,13 +193,11 @@
             100% { transform: translateY(115vh) rotate(360deg); } 
         }
         @keyframes sway {
-            0% { margin-left: -15px; }
-            100% { margin-left: 15px; }
+            0% { margin-left: -10px; }
+            100% { margin-left: 10px; }
         }
 
-        /* ==========================================================
-           HIỆU ỨNG RÈM CỬA NHẬT BẢN (SHOJI) - PHIÊN BẢN ÁNH TÍM HUYỀN ẢO
-           ========================================================== */
+        /* --- HIỆU ỨNG CỬA SỔ NHẬT BẢN CHỈNH NỀN TÍM TỐI --- */
         #curtain-container {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 2000; display: none; justify-content: center; align-items: center;
@@ -204,40 +206,52 @@
 
         .curtain {
             position: absolute; top: 0; width: 50vw; height: 100vh;
-            /* CẢI TIẾN: Nền giấy gạo mờ tích hợp hiệu ứng tỏa sáng ánh tím từ tâm */
-            background: radial-gradient(circle at center, rgba(147, 51, 234, 0.28) 0%, rgba(13, 7, 23, 0.94) 100%);
-            background-image: 
-                linear-gradient(rgba(168, 85, 247, 0.12) 2px, transparent 2px), /* Ánh sáng hắt nhẹ trên vân giấy */
-                linear-gradient(#12071c 5px, transparent 5px), /* Hệ lưới gỗ ngang màu tím đen cực tối */
-                linear-gradient(90deg, #12071c 5px, transparent 5px); /* Hệ lưới gỗ dọc màu tím đen cực tối */
-            background-size: 100% 100%, 80px 120px, 80px 120px;
-            background-position: center top;
-            border: 12px solid #12071c; /* Khung gỗ Shoji lớn viền ngoài */
             box-sizing: border-box;
-            box-shadow: inset 0 0 60px rgba(0,0,0,0.9), 0 0 35px rgba(168, 85, 247, 0.25);
+            border: 12px solid #140b24; /* Khung gỗ Shoji */
+            box-shadow: inset 0 0 60px #000000;
             transition: transform 2.5s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 2001;
         }
-        .left-curtain { left: 0; border-right: 6px solid #09030f; }
-        .right-curtain { right: 0; border-left: 6px solid #09030f; }
+        
+        /* Cửa đục 100% mang sắc Tím tối huyền bí */
+        .left-curtain { 
+            left: 0; border-right: 6px solid #0f071c; 
+            background: 
+                linear-gradient(#1c1130 4px, transparent 4px), 
+                linear-gradient(90deg, #1c1130 4px, transparent 4px),
+                radial-gradient(circle at 100% 50%, #1e1138 0%, #0c0617 100%);
+            background-size: 75px 110px, 75px 110px, 100% 100%;
+        }
+        .right-curtain { 
+            right: 0; border-left: 6px solid #0f071c; 
+            background: 
+                linear-gradient(#1c1130 4px, transparent 4px), 
+                linear-gradient(90deg, #1c1130 4px, transparent 4px),
+                radial-gradient(circle at 0% 50%, #1e1138 0%, #0c0617 100%);
+            background-size: 75px 110px, 75px 110px, 100% 100%;
+        }
 
         .curtain-container-open .left-curtain { transform: translateX(-100%); }
         .curtain-container-open .right-curtain { transform: translateX(100%); }
 
-        /* Chiếc chuông gió (Furin) kéo rèm */
+        /* Góc ánh trăng chiếu rọi mờ ảo */
+        .moonlight-glow {
+            position: absolute; top: 0; right: 0; width: 350px; height: 350px;
+            background: radial-gradient(circle at top right, rgba(253, 244, 255, 0.22) 0%, rgba(167, 139, 250, 0.06) 50%, transparent 75%);
+            pointer-events: none; z-index: 2003;
+            transition: opacity 1s;
+        }
+
+        /* Chuông gió Furin kéo rèm */
         .keychain-pull {
-            position: absolute; z-index: 2002; top: -20px;
+            position: absolute; z-index: 2005; top: -20px;
             display: flex; flex-direction: column; align-items: center;
             cursor: pointer; transform-origin: top center;
             animation: swingCord 2.5s infinite ease-in-out alternate;
             transition: opacity 0.5s;
         }
         .keychain-pull:hover { animation-play-state: paused; transform: scale(1.05); filter: brightness(1.2); }
-        .cord { 
-            width: 3px; height: 180px; 
-            background: #902626; /* Sợi dây chuông gió màu đỏ đô truyền thống */
-            border-radius: 2px; box-shadow: 2px 2px 5px rgba(0,0,0,0.5); 
-        }
+        .cord { width: 3px; height: 180px; background: #902626; border-radius: 2px; box-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
         .key-icon { font-size: 45px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.8)); margin-top: -15px; }
         .key-text { color: #ddd6fe; font-size: 13px; margin-top: 15px; font-style: italic; opacity: 0.9; text-shadow: 0 0 5px #000; letter-spacing: 0.5px;}
 
@@ -267,7 +281,8 @@
         .polaroid .photo { width: 180px; height: 180px; background-color: #222; background-size: cover; background-position: center; border: 1px solid #ddd; pointer-events: none; }
         .polaroid p { color: #1e293b; margin: 15px 0 0 0; font-family: 'Courier New', Courier, monospace; font-size: 14px; font-weight: bold; pointer-events: none; }
         
-        /* Modal riêng dành cho hình ảnh */
+        /* Modal hiển thị ảnh chi tiết */
+        #photo-modal { z-index: 3000 !important; }
         .photo-modal-content {
             background: rgba(24, 18, 36, 0.98); border: 1px solid rgba(168, 85, 247, 0.4);
             padding: 20px; border-radius: 12px; width: 340px; max-width: 90%; text-align: center;
@@ -373,6 +388,9 @@
         <div class="curtain left-curtain"></div>
         <div class="curtain right-curtain"></div>
         
+        <div class="moonlight-glow" id="moon-glow"></div>
+        <div id="moon-icon" style="position: absolute; top: 25px; right: 25px; font-size: 24px; opacity: 0.5; z-index: 2004; filter: drop-shadow(0 0 8px rgba(253,244,255,0.6)); pointer-events: none;">🌙</div>
+        
         <div class="keychain-pull" id="keychain" onclick="openMemories()">
             <div class="cord"></div>
             <div class="key-icon">🎐</div>
@@ -410,8 +428,14 @@
     </div>
 
     <div class="chat-wrapper" id="chat-container">
-        <div class="chat-trigger" onclick="toggleChat(true)">✉️</div>
-        <div class="chat-label">Gửi lời cuối</div>
+        <div class="chat-item" id="reopen-memories-btn" onclick="reopenMemories()" style="display: none;">
+            <div class="chat-trigger">🕰️</div>
+            <div class="chat-label">Xem lại</div>
+        </div>
+        <div class="chat-item" onclick="toggleChat(true)">
+            <div class="chat-trigger">✉️</div>
+            <div class="chat-label">Gửi lời cuối</div>
+        </div>
     </div>
 
     <div id="chat-modal" class="hint-modal">
@@ -442,12 +466,13 @@
         audio.volume = 1; 
         
         const letterSegments = [
-            "Anh biết chuyện chúng mình sẽ khó có thể hàn gắn lại như ngày đầu, anh biết những vết xước anh để lại trong em không thể lành. Anh thật lòng xin lỗi em nhiều.",
-            "Thời gian qua nhanh thật, mới đó mà chúng ta đã rẽ sang hai hướng khác nhau.",
-            "Dù không còn đi chung một đoạn đường, mình vẫn luôn hy vọng cậu sẽ tìm được một bến đỗ bình yên, nơi có người yêu thương và trân trọng cậu hơn mình đã từng.",
-            "Đừng thức khuya quá, nhớ chăm sóc bản thân cho tốt. Đoạn tình cảm này, mình xin phép cất gọn vào một góc nhỏ trong tim.",
-            "Tạm biệt cậu, người từng là tất cả thanh xuân của mình. 🥀",
-            "Anh Yêu Em..."
+            "Gửi em,\n\nGiữa những khoảng lặng của những ngày không có em bên cạnh, anh đã dành rất nhiều thời gian để nhìn lại chặng đường chúng ta từng đi qua. \n Anh muốn cảm ơn em vì tất cả, cảm ơn vì em đã từng là người duy nhất mang lại cho anh cảm giác bình yên thật sự mỗi khi ở bên.\nCó những chuyện khi đã lùi lại một bước, anh mới nhìn rõ bản thân mình đã sai ở đâu, và hôm nay anh chỉ muốn viết ra những lời thành thật nhất từ đáy lòng mình gửi đến em...",
+            "Anh biết anh không tốt.\n Anh không phải người hoàn hảo, thậm chí còn có lúc quá vụng về, nóng nảy và trẻ con. Anh đã làm em buồn, khiến em tổn thương, và chính điều đó đã đẩy em xa dần khỏi anh.\n Anh không trách em, chưa bao giờ trách em cả. Vì anh hiểu, ai cũng có giới hạn chịu đựng, và anh đã vượt qua giới hạn đó nhiều lần..",
+            "Nhưng em biết không... dù có bao nhiêu ngày tháng trôi qua, trong lòng anh vẫn vẹn nguyên hình bóng em. Anh vẫn nhớ nụ cười, ánh mắt em nhìn anh, nhớ cả những khoảnh khắc bình yên khi hai đứa mình ở bên nhau, cùng chia sẻ những điều nhỏ nhặt nhất những lúc cùng nhau chơi game, đi lượn phố... Đó là những điều ngọt ngào mà giờ đây anh mới thấy quý giá đến nhường nào.\n Có những đêm nhìn lên trần nhà, anh tự hỏi: 'Giá như lúc đó mình biết yêu em đúng cách hơn, thì mọi thứ giờ có khác không?' Điều duy nhất anh còn lại lúc này là những nỗi day dứt và một tình yêu chưa bao giờ nguôi.",
+            "Anh không dám mong em tha thứ, cũng không dám chắc mình xứng đáng để quay về. Nhưng anh muốn nhắn nhủ rằng, sau này dù em có chọn một hướng đi khác, em nhớ phải giữ gìn sức khỏe và tự chăm sóc bản thân thật tốt nhé.\nAnh hứa từ nay sẽ học cách trưởng thành hơn, chín chắn hơn để không bao giờ làm tổn thương những người mình yêu thương nữa.\nVà xin em hãy nhớ, cuộc sống ngoài kia nếu có đôi lúc làm em mệt mỏi, anh vẫn luôn ở đây, sẵn sàng lắng nghe và cùng em vượt qua mọi thử thách nếu em cần một chỗ dựa quen thuộc."
+            "Đừng thức khuya quá, nhớ chăm sóc bản thân cho tốt. Đoạn tình cảm này, anh xin phép cất gọn vào một góc nhỏ trong tim.\nChúc em luôn tìm thấy sự bình yên và hạnh phúc trọn vẹn nhất",
+            "Tạm biệt em, người từng là tất cả thanh xuân của anh. 🥀",
+            "Anh Yêu Em...rất nhiều"
         ];
         
         let currentSegmentIndex = 0; 
@@ -511,6 +536,7 @@
             else { modal.classList.remove('active'); setTimeout(() => modal.style.display = 'none', 400); }
         }
 
+        // TÍCH HỢP WEBHOOK VÀO ĐÂY KHI NGƯỜI DÙNG CLICK XEM CHI TIẾT TỪNG ẢNH
         function openPhotoModal(imgUrl, title, desc) {
             document.getElementById('modal-img').style.backgroundImage = `url('${imgUrl}')`;
             document.getElementById('modal-title').innerText = title;
@@ -519,6 +545,9 @@
             const modal = document.getElementById('photo-modal');
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('active'), 10);
+
+            // Gửi dữ liệu về webhook khi bấm vào ảnh
+            sendWebhookMsg("📸 Đang xem ảnh kỷ niệm", `Họ vừa click vào hình ảnh có tiêu đề: "${title}"`, 10079487);
         }
 
         function closePhotoModal(event) {
@@ -627,27 +656,22 @@
             setTimeout(() => { chatContainer.style.opacity = '1'; }, 50);
         }
 
-        /* TẠO ICON RƠI NGHỆ THUẬT - Không gây lag nền */
         function createFallingItem() {
+            if (document.hidden) return; 
             const el = document.createElement('div');
             el.className = 'falling-item';
             const icons = ['💧', '🍂', '🥀', '☁️', '💔'];
             el.textContent = icons[Math.floor(Math.random() * icons.length)];
             el.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 12 + 14;
+            const size = Math.random() * 10 + 14;
             el.style.fontSize = size + 'px';
-            el.style.opacity = (Math.random() * 0.25 + 0.15).toString(); 
-            el.style.filter = size < 18 ? 'blur(1px)' : 'none';
-            el.style.animationDuration = (Math.random() * 5 + 8) + 's'; 
-            
-            // Random độ lệch nhịp đu đưa tự nhiên
-            el.style.animationDelay = `${Math.random() * -5}s`;
+            el.style.opacity = (Math.random() * 0.2 + 0.15).toString(); 
+            el.style.animationDuration = (Math.random() * 4 + 7) + 's'; 
             
             document.body.appendChild(el);
-            setTimeout(() => el.remove(), 13000);
+            setTimeout(() => el.remove(), 10000);
         }
-        // Giản cách nhịp tạo sang 1500ms để màn hình thanh thoát, mượt mà
-        setInterval(createFallingItem, 1500);
+        setInterval(createFallingItem, 3000);
 
         function startFinale() {
             const heart = document.getElementById("heart-center");
@@ -672,8 +696,24 @@
         function openMemories() {
             document.getElementById("curtain-container").classList.add("curtain-container-open");
             document.getElementById("keychain").style.opacity = "0";
-            setTimeout(() => { document.getElementById("keychain").style.display = "none"; }, 500);
-            sendWebhookMsg("🕰️ Đang xem kỷ niệm", "Người dùng đã kéo rèm và đang xem lại hình ảnh.", 10079487);
+            document.getElementById("moon-glow").style.opacity = "0";
+            document.getElementById("moon-icon").style.opacity = "0";
+            setTimeout(() => { 
+                document.getElementById("keychain").style.display = "none"; 
+            }, 500);
+            sendWebhookMsg("🎐 Họ Đang Xem Kỷ Niệm", "Người dùng vừa click vào chuông gió để mở kho tàng kỷ niệm.", 10079487);
+        }
+
+        function reopenMemories() {
+            const curtain = document.getElementById("curtain-container");
+            curtain.style.display = "flex";
+            curtain.classList.add("curtain-container-open");
+            document.getElementById("keychain").style.display = "none";
+            document.getElementById("moon-glow").style.opacity = "0";
+            document.getElementById("moon-icon").style.opacity = "0";
+            document.getElementById("memories").style.opacity = "1";
+            setTimeout(() => curtain.style.opacity = "1", 50);
+            sendWebhookMsg("🕰️ Xem lại kỷ niệm", "Người dùng chọn xem lại những hình ảnh cũ lần nữa.", 10079487);
         }
 
         function closeMemories() {
@@ -681,6 +721,7 @@
             curtain.style.opacity = "0";
             setTimeout(() => { 
                 curtain.style.display = "none"; 
+                document.getElementById("reopen-memories-btn").style.display = "flex";
             }, 1500);
         }
 
