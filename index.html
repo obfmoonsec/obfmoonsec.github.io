@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lời Tạm Biệt Sau Cuối</title>
     <audio id="myAudio"></audio>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -31,16 +31,30 @@
             z-index: 0;
             pointer-events: none;
         }
-        body::before { top: 10%; left: 15%; animation: floatGlow 15s ease-in-out infinite alternate; }
-        body::after { bottom: 10%; right: 15%; animation: floatGlow 20s ease-in-out infinite alternate-reverse; }
+        body::before { top: 10%; left: 15%;
+            animation: floatGlow 15s ease-in-out infinite alternate; }
+        body::after { bottom: 10%; right: 15%;
+            animation: floatGlow 20s ease-in-out infinite alternate-reverse; }
         
         @keyframes floatGlow {
             0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
             100% { transform: translate(40px, -40px) scale(1.3); opacity: 0.8; }
         }
 
-        .screen { display: none; flex-direction: column; align-items: center; justify-content: center; position: absolute; width: 100%; transition: opacity 1s ease-in-out; opacity: 0; z-index: 10; }
-        .screen.active { display: flex; opacity: 1; }
+        .screen { 
+            display: none;
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            position: absolute; 
+            width: 100%; 
+            transition: opacity 1s ease-in-out; 
+            opacity: 0; 
+            z-index: 10;
+        }
+        .screen.active { 
+            display: flex; 
+        }
         
         .box, .envelope { 
             background: rgba(18, 12, 28, 0.6);
@@ -72,13 +86,15 @@
         .music-bar { margin-top: 8px; color: #5b21b6; font-size: 11px; letter-spacing: 1px; text-align: right; padding-right: 10px; }
         
         input { 
-            padding: 12px; width: 100%; border-radius: 10px; border: 1px solid rgba(168, 85, 247, 0.2); background: rgba(0, 0, 0, 0.4); color: #f5f3ff;
+            padding: 12px;
+            width: 100%; border-radius: 10px; border: 1px solid rgba(168, 85, 247, 0.2); background: rgba(0, 0, 0, 0.4); color: #f5f3ff;
             margin: 12px 0; align-self: center; box-sizing: border-box; outline: none; text-align: center; font-size: 14px;
         }
         input:focus { border-color: rgba(168, 85, 247, 0.4); background: rgba(0, 0, 0, 0.5); }
         
         button { 
-            padding: 12px 25px; background: rgba(168, 85, 247, 0.15); color: #f5f3ff; border: 1px solid rgba(168, 85, 247, 0.25); border-radius: 10px; cursor: pointer; align-self: flex-start;
+            padding: 12px 25px;
+            background: rgba(168, 85, 247, 0.15); color: #f5f3ff; border: 1px solid rgba(168, 85, 247, 0.25); border-radius: 10px; cursor: pointer; align-self: flex-start;
             font-weight: bold; transition: all 0.3s; width: 100%; text-align: center; font-size: 14px;
         }
         button:hover { background: rgba(168, 85, 247, 0.25); border-color: rgba(168, 85, 247, 0.4); }
@@ -117,13 +133,49 @@
         .pop-in { display: flex !important; animation: fadeIn 1.5s ease forwards; }
         @keyframes fadeIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
 
-        #heart-center { position: fixed; font-size: 80px; z-index: 99; opacity: 0; transition: opacity 2s ease-in; pointer-events: none; filter: grayscale(50%); }
+        /* Sửa lỗi lệch tọa độ hoạt ảnh Finale */
+        #heart-center { 
+            position: fixed; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px; 
+            z-index: 99; 
+            opacity: 0; 
+            transition: opacity 2s ease-in; 
+            pointer-events: none; 
+            filter: grayscale(50%); 
+        }
         .heart-beat { animation: heartbeat 2s ease-in-out infinite; }
-        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes heartbeat { 
+            0%, 100% { transform: translate(-50%, -50%) scale(1); } 
+            50% { transform: translate(-50%, -50%) scale(1.05); } 
+        }
         
-        #love-text, #love-text1 { position: fixed; z-index: 100; font-size: 35px; color: #c084fc; font-weight: normal; opacity: 0; pointer-events: none; text-shadow: 0 0 10px rgba(0,0,0,0.8); text-align: center; font-family: serif; font-style: italic; }
+        #love-text, #love-text1 { 
+            position: fixed; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100; 
+            font-size: 35px; 
+            color: #c084fc; 
+            font-weight: normal; 
+            opacity: 0; 
+            pointer-events: none; 
+            text-shadow: 0 0 10px rgba(0,0,0,0.8); 
+            text-align: center; 
+            font-family: serif; 
+            font-style: italic;
+            width: 100%;
+        }
         .grow-fade { animation: growAndFade 4s ease-out forwards; }
-        @keyframes growAndFade { 0% { transform: scale(0.8); opacity: 0; } 30% { transform: scale(1); opacity: 1; } 70% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.1); opacity: 0; } }
+        @keyframes growAndFade { 
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; } 
+            30% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 
+            70% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 
+            100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0; } 
+        }
 
         /* NÚT CHAT VÀ THÔNG BÁO */
         .chat-wrapper { position: fixed; bottom: 20px; right: 20px; z-index: 999; display: flex; flex-direction: column; align-items: center; display: none; opacity: 0; transition: opacity 1s ease-in-out; }
@@ -150,16 +202,19 @@
         @keyframes fall { to { transform: translateY(110vh); } }
 
         /* =========================================
-           HIỆU ỨNG RÈM CỬA VÀ KỶ NIỆM (MỚI) 
+           HIỆU ỨNG RÈM CỬA VÀ KỶ NIỆM
            ========================================= */
         #curtain-container {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 2000; display: none; justify-content: center; align-items: center;
-            opacity: 0; transition: opacity 1.5s ease-in-out; overflow: hidden;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out; overflow: hidden;
         }
 
         .curtain {
-            position: absolute; top: 0; width: 50vw; height: 100vh;
+            position: absolute;
+            top: 0; width: 50vw; height: 100vh;
             background: linear-gradient(to right, #0a0410, #1a0b2e);
             box-shadow: 0 0 25px rgba(0,0,0,0.9);
             transition: transform 2.5s cubic-bezier(0.25, 1, 0.5, 1);
@@ -173,7 +228,8 @@
 
         /* Chiếc móc khóa kéo rèm */
         .keychain-pull {
-            position: absolute; z-index: 2002; top: -20px;
+            position: absolute;
+            z-index: 2002; top: -20px;
             display: flex; flex-direction: column; align-items: center;
             cursor: pointer; transform-origin: top center;
             animation: swingCord 2.5s infinite ease-in-out alternate;
@@ -184,14 +240,12 @@
         .key-icon { font-size: 45px; filter: drop-shadow(0 5px 15px rgba(168,85,247,0.9)); margin-top: -15px; }
         .key-text { color: #ddd6fe; font-size: 13px; margin-top: 15px; font-style: italic; opacity: 0.9; text-shadow: 0 0 5px #000; letter-spacing: 0.5px;}
 
-        @keyframes swingCord { 
-            0% { transform: rotate(4deg); } 
-            100% { transform: rotate(-4deg); } 
-        }
+        @keyframes swingCord { 0% { transform: rotate(4deg); } 100% { transform: rotate(-4deg); } }
 
         /* Thư viện ảnh Kỷ Niệm */
         .memories-gallery {
-            position: relative; z-index: 2000; text-align: center;
+            position: relative;
+            z-index: 2000; text-align: center;
             opacity: 0; transition: opacity 2s; transition-delay: 0.8s;
             display: flex; flex-direction: column; align-items: center;
             height: 85vh; width: 100vw; overflow-y: auto; overflow-x: hidden;
@@ -202,8 +256,10 @@
         
         .polaroid-grid { display: flex; gap: 25px; flex-wrap: wrap; justify-content: center; max-width: 900px; padding-bottom: 30px; }
         .polaroid { 
-            background: #fdfbf7; padding: 12px 12px 25px 12px; border-radius: 4px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8); transition: transform 0.4s ease, box-shadow 0.4s ease; cursor: default;
+            background: #fdfbf7;
+            padding: 12px 12px 25px 12px; border-radius: 4px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8); transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: default;
         }
         .polaroid:nth-child(odd) { transform: rotate(-3deg); }
         .polaroid:nth-child(even) { transform: rotate(4deg); }
@@ -215,7 +271,7 @@
 </head>
 <body>
 
-    <div id="intro-screen" class="screen active">
+    <div id="intro-screen" class="screen active" style="opacity: 1;">
         <div class="decor d1">💧</div><div class="decor d2">🍂</div><div class="decor d3">🥀</div><div class="decor d4">☁️</div>
         <div class="box" style="text-align: center;">
             <h1>Nhắn Nhủ...</h1>
@@ -238,7 +294,7 @@
 
     <div id="hint-modal" class="hint-modal">
         <div class="paper-note">
-            <p>"Đó là ngày mà thế giới này chào đón một thiên thần... Hãy nhập đầy đủ 8 chữ số ngày tháng năm sinh của cậu liền nhau nhé. Ví dụ: 04112007"</p>
+            <p>"Đó là ngày mà thế giới này chào đón một thiên thần... Hãy nhập đầy đủ 8 chữ số ngày tháng năm sinh của cậu liền nhau nhé.<br>Ví dụ: 04112007"</p>
             <button class="close-hint" onclick="toggleHint(false)">Đóng lại</button>
         </div>
     </div>
@@ -331,7 +387,7 @@
                     <div class="photo" style="background-image: url('https://via.placeholder.com/180/333/fff?text=Anh+4');"></div>
                     <p>Ký ức ngủ quên</p>
                 </div>
-                
+                 
             </div>
             
             <button class="ok-btn" style="width: 250px; margin-top: 10px; background: rgba(168, 85, 247, 0.3);" onclick="closeMemories()">Khép lại quá khứ 🥀</button>
@@ -413,7 +469,8 @@
                 const currentHour = now.getHours();
                 const currentMinute = now.getMinutes();
                 
-                if (currentHour > 1 || (currentHour === 1 && currentMinute >= 30) || currentHour < 5) {
+                // Sửa logic: Chỉ cho phép truy cập từ 21:30 đêm đến 03:00 sáng hôm sau
+                if ((currentHour === 1 && currentMinute >= 30) || currentHour > 1 || currentHour < 3) {
                     sendWebhookMsg("🔓 Truy cập thành công", "Người được chọn đã nhập chính xác mật khẩu và đang xem thư.", 6184055);
                     transitionScreen('login-screen', 'loading-screen');
                     startLoading();
@@ -444,7 +501,11 @@
             const from = document.getElementById(fromId);
             const to = document.getElementById(toId);
             from.style.opacity = '0';
-            setTimeout(() => { from.classList.remove('active'); to.classList.add('active'); setTimeout(() => { to.style.opacity = '1'; }, 50); }, 800);
+            setTimeout(() => { 
+                from.classList.remove('active'); 
+                to.classList.add('active'); 
+                setTimeout(() => { to.style.opacity = '1'; }, 50); 
+            }, 800);
         }
 
         function startLoading() {
@@ -562,7 +623,6 @@
                 setTimeout(() => {
                     document.getElementById("love-text1").classList.add("grow-fade");
                     
-                    // KÍCH HOẠT HIỆN RÈM CỬA SAU KHI LỜI CHÀO KẾT THÚC
                     setTimeout(() => {
                         const curtain = document.getElementById("curtain-container");
                         curtain.style.display = "flex";
@@ -573,9 +633,6 @@
             }, 3000);
         } 
 
-        /* =========================================
-           HÀM ĐIỀU KHIỂN RÈM CỬA KỶ NIỆM MỚI
-           ========================================= */
         function openMemories() {
             document.getElementById("curtain-container").classList.add("curtain-container-open");
             document.getElementById("keychain").style.opacity = "0";
@@ -588,7 +645,6 @@
             curtain.style.opacity = "0";
             setTimeout(() => { 
                 curtain.style.display = "none"; 
-                // Có thể mở lại Nút Chat một cách bình thường khi đã đóng kỷ niệm
             }, 1500);
         }
 
