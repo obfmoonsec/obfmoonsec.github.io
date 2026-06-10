@@ -404,6 +404,39 @@
             font-family: 'Courier New', Courier, monospace; font-size: 14px; font-weight: bold; pointer-events: none;
         }
         
+        /* --- TỐI ƯU THƯ VIỆN ẢNH TRÊN ĐIỆN THOẠI (LƯỚI 2 CỘT) --- */
+        @media (max-width: 768px) {
+            .polaroid-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important; /* Tự động chia làm 2 cột bằng nhau */
+                gap: 12px !important; /* Thu hẹp khoảng cách giữa các ảnh */
+                padding: 10px 15px 40px 15px !important;
+                max-width: 100% !important;
+            }
+
+            .polaroid {
+                padding: 8px 8px 18px 8px !important; /* Thu nhỏ phần viền trắng polaroid */
+                box-shadow: 0 10px 20px rgba(0,0,0,0.6) !important;
+            }
+
+            .polaroid .photo {
+                width: 100% !important; /* Chiều rộng co giãn theo cột */
+                height: auto !important;
+                aspect-ratio: 1 / 1 !important; /* Giữ khung ảnh luôn vuông vắn */
+            }
+
+            .polaroid p {
+                font-size: 12px !important; /* Thu nhỏ chữ tiêu đề ảnh một chút cho vừa vặn */
+                margin: 10px 0 0 0 !important;
+            }
+
+            /* Giảm bớt độ nghiêng của ảnh trên mobile để bố cục không bị đè lệch vào nhau */
+            .polaroid:nth-child(odd) { transform: rotate(-1.5deg); }
+            .polaroid:nth-child(even) { transform: rotate(1.5deg); }
+            .polaroid:hover { transform: scale(1.04) rotate(0deg) !important; }
+        }
+        
+        
         /* Modal hiển thị ảnh chi tiết */
         #photo-modal { z-index: 3000 !important;
         }
