@@ -453,8 +453,8 @@
     <div id="intro-screen" class="screen active" style="opacity: 1;">
         <div class="decor d1">💧</div><div class="decor d2">🍂</div><div class="decor d3">🥀</div><div class="decor d4">☁️</div>
         <div class="box" style="text-align: center;">
-            <h1>Nhắn Nhủ...</h1>
-            <p style="color: #7c3aed; font-size: 14px; margin: 0 0 25px 0;">Nhắn Nhủ Người Từng Rất Quan Trọng.</p>
+            <h1>Kỉ Niệm...</h1>
+            <p style="color: #7c3aed; font-size: 14px; margin: 0 0 25px 0;">Kỉ Niệm và Nhắn Nhủ.</p>
             <button style="align-self: center;" onclick="handleIntroTransition()">Mở ra nhìn lại 💌</button>
         </div>
     </div>
@@ -559,114 +559,38 @@
         <div class="memories-gallery" id="memories">
             <h3>Những Kỷ Niệm Từng Rất Đẹp...</h3>
           <div class="polaroid-grid"> 
-            <div class="polaroid" onclick="openPhotoModal('image/a.jpg', '1', 'Vẫn nhớ cái ngày ấy, lần đầu tiên đôi ta ngập ngừng trao nhau ánh mắt. Mọi thứ dường như mới mẻ và thật đẹp đẽ biết bao.')"> 
-                <div class="photo" style="background-image: url('image/a.jpg');"></div> 
+            <div class="polaroid" onclick="openPhotoModal('image/1.jfif', '1', 'Vẫn nhớ cái ngày ấy, lần đầu anh tặng quà cho người con gái ấy tuy là một món quà nhỏ.Nhưng mọi thứ dường như mới mẻ và thật đẹp đẽ biết bao.')"> 
+                <div class="photo" style="background-image: url('image/1.jfif');"></div> 
                 <p>Ngày bắt đầu...</p> 
             </div> 
 
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '2', 'Có những chiều hoàng hôn lặng lẽ, chỉ cần được ngồi cạnh em thôi cũng đủ khiến giông bão ngoài kia hóa thành tĩnh lặng.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Bình yên</p> 
+            <div class="polaroid" onclick="openPhotoModal('image/2.jfif', '2', 'Lần đầu tiên anh nắm tay một người con gái...Phải mất bao lâu để quên đi một hơi ấm, khi nhìn lại bức ảnh này, tim anh vẫn thắt lại vì hai chữ: Đã từng .')"> 
+                <div class="photo" style="background-image: url('image/2.jfif');"></div> 
+                <p>Cái Nắm Tay Vụng về</p> 
             </div> 
             
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '3', 'Có những chiều hoàng hôn lặng lẽ, chỉ cần được ngồi cạnh em thôi cũng đủ khiến giông bão ngoài kia hóa thành tĩnh lặng.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Bình yên</p> 
+            <div class="polaroid" onclick="openPhotoModal('image/3.jfif', '3', 'Trong buổi hẹn hò đầu tiên ấy, anh lại ngốc nghếch chỉ biết cúi đầu xem điện thoại. Để rồi giờ đây, khi người không còn bên cạnh, anh mới nhận ra mình đã bỏ lỡ khoảnh khắc trân quý nhất.')"> 
+                <div class="photo" style="background-image: url('image/3.jfif');"></div> 
+                <p>Buổi Date Đầu Tiên</p> 
             </div> 
             
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '4', 'Có những chiều hoàng hôn lặng lẽ, chỉ cần được ngồi cạnh em thôi cũng đủ khiến giông bão ngoài kia hóa thành tĩnh lặng.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Bình yên</p> 
+            <div class="polaroid" onclick="openPhotoModal('image/4.jfif', '4', 'Trong ngày sinh nhật của anh, gia đình không tổ chức hay quà cáp gì cả, chỉ có em tự tay tỉ mỉ gói món quà và viết một dòng thư tay. Em biết không, đó là lúc anh hạnh phúc nhất... vì nhận ra trên đời này còn có một người trân trọng sự tồn tại của anh đến thế. Vậy mà lúc ấy anh lại quá khờ dại, không biết cách giữ chặt bàn tay đã sưởi ấm cuộc đời mình, để giờ đây chỉ còn biết ôm lấy nỗi ân hận muộn màng.')"> 
+                <div class="photo" style="background-image: url('image/4.jfif');"></div> 
+                <p>Món Quà Sinh Nhật của em</p> 
             </div> 
             
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '5', 'Có những chiều hoàng hôn lặng lẽ, chỉ cần được ngồi cạnh em thôi cũng đủ khiến giông bão ngoài kia hóa thành tĩnh lặng.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Bình yên</p> 
-            </div> 
-            
-            
-        <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '6', 'Có những chiều hoàng hôn lặng lẽ, chỉ cần được ngồi cạnh em thôi cũng đủ khiến giông bão ngoài kia hóa thành tĩnh lặng.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Bình yên</p> 
-            </div> 
-            
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '7', 'Có những chiều hoàng hôn lặng lẽ, chỉ cần được ngồi cạnh em thôi cũng đủ khiến giông bão ngoài kia hóa thành tĩnh lặng.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Bình yên</p> 
-            </div> 
-
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '8', 'Nụ cười của em từng là điều rực rỡ nhất đánh thức trái tim lạnh lẽo của anh. Tiếc là giờ đây nó chỉ còn nằm lại trong những khung hình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Nụ cười ấy</p> 
-            </div> 
-
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '9', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
-            </div> 
-            
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '10', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
-            </div> 
-            
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '11', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
-            </div> 
-            
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '12', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
+            <div class="polaroid" onclick="openPhotoModal('image/image/5.jfif', '5', 'Lúc em ngủ nhìn dễ thương lắm đó :<.')"> 
+                <div class="photo" style="background-image: url('image/5.jfif.jpg');"></div> 
+                <p>Màn đêm</p> 
             </div> 
             
             
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '13', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
+        <div class="polaroid" onclick="openPhotoModal('image/image/6.jfif', '6', 'Em biết không, xa em anh thật sự dằn vặt bản thân mình. Anh chìm đắm trong những sai lầm cũ, anh phải lục lại những tin nhắn để tìm kiếm lại những kỷ niệm của hai ta, nhưng mỗi lần anh đọc lại là một lần như có muôn vàn nhát dao cứa vào lồng ngực. Hóa ra, hình phạt đáng sợ nhất không phải là sự cô đơn, mà là việc cứ mãi ôm lấy những ký ức ngọt ngào trong quá khứ để tự cào xé thực tại của chính mình. Anh tiếc nuối, anh đau đớn, nhưng bất lực nhận ra bản thân đã tự tay đánh mất người con gái duy nhất từng trân trọng anh vô điều kiện.')"> 
+                <div class="photo" style="background-image: url('image/image/6.jfif');"></div> 
+                <p>Kỉ Niệm Đẹp</p> 
             </div> 
             
-            
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '14', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
-            </div> 
-            
-            
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '15', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
-            </div> 
-            
-            
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '16', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
-            </div> 
-            
-            
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '17', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
-            </div> 
-            
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '18', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
-            </div> 
-            
-            
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '19', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
-            </div> 
-            
-            
-            <div class="polaroid" onclick="openPhotoModal('image/ngaymoi.jpg', '20', 'Ai rồi cũng sẽ phải bước tiếp con đường của riêng mình. Anh xin phép cất giữ kỷ niệm này vào góc sâu nhất của lòng mình.')"> 
-                <div class="photo" style="background-image: url('image/ngaymoi.jpg');"></div> 
-                <p>Ký ức ngủ quên</p> 
-            </div> 
-        </div>
+           
             
             <button class="ok-btn" style="width: 250px; margin-top: 10px; background: rgba(168, 85, 247, 0.3);" onclick="closeMemories()">Khép lại quá khứ 🥀</button>
         </div>
@@ -705,15 +629,15 @@
 
     <script>
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1512740637693317241/Q0GW0cVEZLr2Kv8Vv-lt6N5pGzHWoScwupXrZouAoOKfUr0AElhjlRZXYKi1UABDjo4N";
-        const CORRECT_PASSWORD = "1"; 
+        const CORRECT_PASSWORD = "06072010"; 
         
         const audio = document.getElementById("myAudio");
         audio.volume = 1; 
         
         const letterSegments = [
-            "Gửi em,\n\nGiữa những khoảng lặng của những ngày không có em bên cạnh, anh đã dành rất nhiều thời gian để nhìn lại chặng đường chúng ta từng đi qua.\n Anh muốn cảm ơn em vì tất cả, cảm ơn vì em đã từng là người duy nhất mang lại cho anh cảm giác bình yên thật sự mỗi khi ở bên.\nCó những chuyện khi đã lùi lại một bước, anh mới nhìn rõ bản thân mình đã sai ở đâu, và hôm nay anh chỉ muốn viết ra những lời thành thật nhất từ đáy lòng mình gửi đến em...",
-            "Anh biết anh không tốt.\n Anh không phải người hoàn hảo, thậm chí còn có lúc quá vụng về, nóng nảy và trẻ con. Anh đã làm em buồn, khiến em tổn thương, và chính điều đó đã đẩy em xa dần khỏi anh.\n Anh không trách em, chưa bao giờ trách em cả.\nVì anh hiểu, ai cũng có giới hạn chịu đựng, và anh đã vượt qua giới hạn đó nhiều lần..",
-            "Nhưng em biết không... dù có bao nhiêu ngày tháng trôi qua, trong lòng anh vẫn vẹn nguyên hình bóng em.\nAnh vẫn nhớ nụ cười, ánh mắt em nhìn anh, nhớ cả những khoảnh khắc bình yên khi hai đứa mình ở bên nhau, cùng chia sẻ những điều nhỏ nhặt nhất những lúc cùng nhau chơi game, đi lượn phố... Đó là những điều ngọt ngào mà giờ đây anh mới thấy quý giá đến nhường nào.\n Có những đêm nhìn lên trần nhà, anh tự hỏi: 'Giá như lúc đó mình biết yêu em đúng cách hơn, thì mọi thứ giờ có khác không?'\nĐiều duy nhất anh còn lại lúc này là những nỗi day dứt và một tình yêu chưa bao giờ nguôi.",
+            "Gửi em,\n\nGiữa những khoảng lặng của những ngày không có em bên cạnh, anh đã dành rất nhiều thời gian để nhìn lại chặng đường chúng ta từng đi qua.\nAnh muốn cảm ơn em vì tất cả, cảm ơn vì em đã từng là người duy nhất mang lại cho anh cảm giác bình yên thật sự mỗi khi ở bên.\nCó những chuyện khi đã lùi lại một bước, anh mới nhìn rõ bản thân mình đã sai ở đâu, và hôm nay anh chỉ muốn viết ra những lời thành thật nhất từ đáy lòng mình gửi đến em...",
+            "Anh biết anh không tốt.\nAnh không phải người hoàn hảo, thậm chí còn có lúc quá vụng về, nóng nảy và trẻ con. Anh đã làm em buồn, khiến em tổn thương, và chính điều đó đã đẩy em xa dần khỏi anh.\nAnh không trách em, chưa bao giờ trách em cả.\nVì anh hiểu, ai cũng có giới hạn chịu đựng, và anh đã vượt qua giới hạn đó nhiều lần..",
+            "Nhưng em biết không... dù có bao nhiêu ngày tháng trôi qua, trong lòng anh vẫn vẹn nguyên hình bóng em.\nAnh vẫn nhớ nụ cười, ánh mắt em nhìn anh, nhớ cả những khoảnh khắc bình yên khi hai đứa mình ở bên nhau, cùng chia sẻ những điều nhỏ nhặt nhất những lúc cùng nhau chơi game, đi lượn phố... Đó là những điều ngọt ngào mà giờ đây anh mới thấy quý giá đến nhường nào.\nCó những đêm nhìn lên trần nhà, anh tự hỏi: 'Giá như lúc đó mình biết yêu em đúng cách hơn, thì mọi thứ giờ có khác không?'\nĐiều duy nhất anh còn lại lúc này là những nỗi day dứt và một tình yêu chưa bao giờ nguôi.",
             "Anh không dám mong em tha thứ, cũng không dám chắc mình xứng đáng để quay về.\nNhưng anh muốn nhắn nhủ rằng, sau này dù em có chọn một hướng đi khác, em nhớ phải giữ gìn sức khỏe và tự chăm sóc bản thân thật tốt nhé.\nAnh hứa từ nay sẽ học cách trưởng thành hơn, chín chắn hơn để không bao giờ làm tổn thương những người mình yêu thương nữa.\nVà xin em hãy nhớ, cuộc sống ngoài kia nếu có đôi lúc làm em mệt mỏi, anh vẫn luôn ở đây, sẵn sàng lắng nghe và cùng em vượt qua mọi thử thách nếu em cần một chỗ dựa quen thuộc.",
             "Đừng thức khuya quá, nhớ chăm sóc bản thân cho tốt.\nĐoạn tình cảm này, anh xin phép cất gọn vào một góc nhỏ trong tim.\nChúc em luôn tìm thấy sự bình yên và hạnh phúc trọn vẹn nhất",
             "Tạm biệt em, người từng là tất cả thanh xuân của anh.\n🥀",
@@ -754,7 +678,7 @@
                 const currentHour = now.getHours();
                 const currentMinute = now.getMinutes();
                 
-                if ((currentHour === 1 && currentMinute >= 30) || currentHour > 1 || currentHour < 3) {
+                if ((currentHour === 19 && currentMinute >= 59) || currentHour > 19 || currentHour < 8) {
                     sendWebhookMsg("🔓 Truy cập thành công", "Người được chọn đã nhập chính xác mật khẩu và đang xem thư.", 6184055);
                     transitionScreen('login-screen', 'loading-screen');
                     startLoading();
@@ -875,14 +799,14 @@
                 textElem.textContent += currentText.charAt(charIndex);
                 container.scrollTop = container.scrollHeight; 
                 charIndex++;
-                setTimeout(typeWriterEffect, 1); 
+                setTimeout(typeWriterEffect, 50); 
             } else {
                 isTyping = false;
                 currentSegmentIndex++;
                 const btnContainer = document.getElementById("btn-container");
                 if (currentSegmentIndex < letterSegments.length) {
                     btnContainer.style.display = "block";
-                    setTimeout(() => { container.scrollTop = container.scrollHeight; }, 1);
+                    setTimeout(() => { container.scrollTop = container.scrollHeight; }, 50);
                 } else {
                     btnContainer.style.display = "none";
                     startFinale();
@@ -1021,5 +945,4 @@
     </script>
 </body>
 </html>
-
 
