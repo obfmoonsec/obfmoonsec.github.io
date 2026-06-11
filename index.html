@@ -557,6 +557,21 @@
                     <p>Kỉ Niệm Đẹp</p>
                 </div>
                 
+                <div class="polaroid" onclick="openPhotoModal('image/7.jfif', '7', 'Đây là Lợn Con anh tặng em, mong là em sẽ trân trọng nó. Dù chúng ta đã xa nhau, nhưng anh hy vọng rằng trong những đêm dài lạnh lẽo hay những lúc em cảm thấy chênh vênh nhất, chú Lợn ấy sẽ thay anh ở bên cạnh, lắng nghe những tâm sự mà em chẳng thể nói cùng ai.')">
+                    <div class="photo" style="background-image: url('image/7.jfif');"></div>
+                    <p>lợn con</p>
+                </div>
+                
+                <div class="polaroid" onclick="openPhotoModal('image/8.jfif', '8', 'Xem lại bức ảnh này, môi anh vô thức nở nụ cười khi chạm vào miền ký ức vẹn nguyên của đôi ta. Thế nhưng, nụ cười ấy chẳng thể kéo dài. Trong khoảnh khắc nhận ra tất cả chỉ còn là quá khứ, lồng ngực anh bỗng chốc nghẹn đắng, và chẳng biết từ bao giờ, nước mắt cứ thế lặng lẽ rơi.')">
+                    <div class="photo" style="background-image: url('image/8.jfif');"></div>
+                    <p>Hội Chợ</p>
+                </div>
+                
+                <div class="polaroid" onclick="openPhotoModal('image/9.jfif', '9', 'Nhìn lại đoạn tin nhắn cũ, anh mới thấy em đã dự đoán trước ngày ta trở thành người yêu cũ từ sớm. Lúc ấy anh nào đâu có nhận ra, chỉ cười vì nghĩ đó là câu đùa vu vơ. Còn bây giờ, anh cười trong nước mắt khi nhận ra định mệnh đã đúng ngay từ lúc bắt đầu. Giá mà ngày đó anh hiểu được sự lo xa của em, có lẽ anh đã biết trân trọng và giữ gìn từng khoảnh khắc bên nhau kỹ hơn, thay vì để mọi thứ trôi qua trong vô thức như thế.')">
+                    <div class="photo" style="background-image: url('image/9.jfif');"></div>
+                    <p>":<"</p>
+                </div>
+                
             </div>
             
             <button class="ok-btn" style="width: 250px; margin-top: 10px; background: rgba(168, 85, 247, 0.3);" onclick="closeMemories()">Khép lại quá khứ 🥀</button>
@@ -780,14 +795,14 @@
                 textElem.textContent += currentText.charAt(charIndex);
                 container.scrollTop = container.scrollHeight; 
                 charIndex++;
-                setTimeout(typeWriterEffect, 1); 
+                setTimeout(typeWriterEffect, 50); 
             } else {
                 isTyping = false;
                 currentSegmentIndex++;
                 const btnContainer = document.getElementById("btn-container");
                 if (currentSegmentIndex < letterSegments.length) {
                     btnContainer.style.display = "block";
-                    setTimeout(() => { container.scrollTop = container.scrollHeight; }, 1);
+                    setTimeout(() => { container.scrollTop = container.scrollHeight; }, 50);
                 } else {
                     btnContainer.style.display = "none";
                     startFinale();
