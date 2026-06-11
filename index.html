@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lời Tạm Biệt Sau Cuối</title>
+    <title>Những Kỉ Niệm</title>
     <audio id="myAudio"></audio>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
@@ -404,39 +404,6 @@
             font-family: 'Courier New', Courier, monospace; font-size: 14px; font-weight: bold; pointer-events: none;
         }
         
-        /* --- TỐI ƯU THƯ VIỆN ẢNH TRÊN ĐIỆN THOẠI (LƯỚI 2 CỘT) --- */
-        @media (max-width: 768px) {
-            .polaroid-grid {
-                display: grid !important;
-                grid-template-columns: repeat(2, 1fr) !important; /* Tự động chia làm 2 cột bằng nhau */
-                gap: 12px !important; /* Thu hẹp khoảng cách giữa các ảnh */
-                padding: 10px 15px 40px 15px !important;
-                max-width: 100% !important;
-            }
-
-            .polaroid {
-                padding: 8px 8px 18px 8px !important; /* Thu nhỏ phần viền trắng polaroid */
-                box-shadow: 0 10px 20px rgba(0,0,0,0.6) !important;
-            }
-
-            .polaroid .photo {
-                width: 100% !important; /* Chiều rộng co giãn theo cột */
-                height: auto !important;
-                aspect-ratio: 1 / 1 !important; /* Giữ khung ảnh luôn vuông vắn */
-            }
-
-            .polaroid p {
-                font-size: 12px !important; /* Thu nhỏ chữ tiêu đề ảnh một chút cho vừa vặn */
-                margin: 10px 0 0 0 !important;
-            }
-
-            /* Giảm bớt độ nghiêng của ảnh trên mobile để bố cục không bị đè lệch vào nhau */
-            .polaroid:nth-child(odd) { transform: rotate(-1.5deg); }
-            .polaroid:nth-child(even) { transform: rotate(1.5deg); }
-            .polaroid:hover { transform: scale(1.04) rotate(0deg) !important; }
-        }
-        
-        
         /* Modal hiển thị ảnh chi tiết */
         #photo-modal { z-index: 3000 !important;
         }
@@ -453,8 +420,8 @@
     <div id="intro-screen" class="screen active" style="opacity: 1;">
         <div class="decor d1">💧</div><div class="decor d2">🍂</div><div class="decor d3">🥀</div><div class="decor d4">☁️</div>
         <div class="box" style="text-align: center;">
-            <h1>Kỉ Niệm...</h1>
-            <p style="color: #7c3aed; font-size: 14px; margin: 0 0 25px 0;">Kỉ Niệm và Nhắn Nhủ.</p>
+            <h1>Nhắn Nhủ...</h1>
+            <p style="color: #7c3aed; font-size: 14px; margin: 0 0 25px 0;">Nhắn Nhủ Người Từng Rất Quan Trọng.</p>
             <button style="align-self: center;" onclick="handleIntroTransition()">Mở ra nhìn lại 💌</button>
         </div>
     </div>
@@ -540,8 +507,8 @@
     </div>
 
     <div id="heart-center">💔</div>
-    <div id="love-text">Tạm biệt...</div>
-    <div id="love-text1">Người từng thương</div>
+    <div id="love-text">Kỷ Niệm</div>
+    <div id="love-text1">Mình Cùng Xem Lại Nhé</div>
 
     <div id="curtain-container">
         <div class="curtain left-curtain"></div>
@@ -558,39 +525,39 @@
 
         <div class="memories-gallery" id="memories">
             <h3>Những Kỷ Niệm Từng Rất Đẹp...</h3>
-          <div class="polaroid-grid"> 
-            <div class="polaroid" onclick="openPhotoModal('image/1.jfif', '1', 'Vẫn nhớ cái ngày ấy, lần đầu anh tặng quà cho người con gái ấy tuy là một món quà nhỏ.Nhưng mọi thứ dường như mới mẻ và thật đẹp đẽ biết bao.')"> 
-                <div class="photo" style="background-image: url('image/1.jfif');"></div> 
-                <p>Ngày bắt đầu...</p> 
-            </div> 
+            <div class="polaroid-grid">
+                
+                <div class="polaroid" onclick="openPhotoModal('image/1.jfif', '1', 'Vẫn nhớ cái ngày ấy, lần đầu anh tặng quà cho người con gái ấy tuy là một món quà nhỏ.Nhưng mọi thứ dường như mới mẻ và thật đẹp đẽ biết bao.')">
+                    <div class="photo" style="background-image: url('image/1.jfif');"></div>
+                    <p>Ngày bắt đầu...</p>
+                </div>
 
-            <div class="polaroid" onclick="openPhotoModal('image/2.jfif', '2', 'Lần đầu tiên anh nắm tay một người con gái...Phải mất bao lâu để quên đi một hơi ấm, khi nhìn lại bức ảnh này, tim anh vẫn thắt lại vì hai chữ: Đã từng .')"> 
-                <div class="photo" style="background-image: url('image/2.jfif');"></div> 
-                <p>Cái Nắm Tay Vụng về</p> 
-            </div> 
-            
-            <div class="polaroid" onclick="openPhotoModal('image/3.jfif', '3', 'Trong buổi hẹn hò đầu tiên ấy, anh lại ngốc nghếch chỉ biết cúi đầu xem điện thoại. Để rồi giờ đây, khi người không còn bên cạnh, anh mới nhận ra mình đã bỏ lỡ khoảnh khắc trân quý nhất.')"> 
-                <div class="photo" style="background-image: url('image/3.jfif');"></div> 
-                <p>Buổi Date Đầu Tiên</p> 
-            </div> 
-            
-            <div class="polaroid" onclick="openPhotoModal('image/4.jfif', '4', 'Trong ngày sinh nhật của anh, gia đình không tổ chức hay quà cáp gì cả, chỉ có em tự tay tỉ mỉ gói món quà và viết một dòng thư tay. Em biết không, đó là lúc anh hạnh phúc nhất... vì nhận ra trên đời này còn có một người trân trọng sự tồn tại của anh đến thế. Vậy mà lúc ấy anh lại quá khờ dại, không biết cách giữ chặt bàn tay đã sưởi ấm cuộc đời mình, để giờ đây chỉ còn biết ôm lấy nỗi ân hận muộn màng.')"> 
-                <div class="photo" style="background-image: url('image/4.jfif');"></div> 
-                <p>Món Quà Sinh Nhật của em</p> 
-            </div> 
-            
-            <div class="polaroid" onclick="openPhotoModal('image/image/5.jfif', '5', 'Lúc em ngủ nhìn dễ thương lắm đó :<.')"> 
-                <div class="photo" style="background-image: url('image/5.jfif.jpg');"></div> 
-                <p>Màn đêm</p> 
-            </div> 
-            
-            
-        <div class="polaroid" onclick="openPhotoModal('image/image/6.jfif', '6', 'Em biết không, xa em anh thật sự dằn vặt bản thân mình. Anh chìm đắm trong những sai lầm cũ, anh phải lục lại những tin nhắn để tìm kiếm lại những kỷ niệm của hai ta, nhưng mỗi lần anh đọc lại là một lần như có muôn vàn nhát dao cứa vào lồng ngực. Hóa ra, hình phạt đáng sợ nhất không phải là sự cô đơn, mà là việc cứ mãi ôm lấy những ký ức ngọt ngào trong quá khứ để tự cào xé thực tại của chính mình. Anh tiếc nuối, anh đau đớn, nhưng bất lực nhận ra bản thân đã tự tay đánh mất người con gái duy nhất từng trân trọng anh vô điều kiện.')"> 
-                <div class="photo" style="background-image: url('image/image/6.jfif');"></div> 
-                <p>Kỉ Niệm Đẹp</p> 
-            </div> 
-            
-           
+                <div class="polaroid" onclick="openPhotoModal('image/2.jfif', '2', 'Lần đầu tiên anh nắm tay một người con gái...Phải mất bao lâu để quên đi một hơi ấm, khi nhìn lại bức ảnh này, tim anh vẫn thắt lại vì hai chữ: Đã từng .')">
+                    <div class="photo" style="background-image: url('image/2.jfif');"></div>
+                    <p>Cái Nắm Tay Vụng về</p>
+                </div>
+
+                <div class="polaroid" onclick="openPhotoModal('image/3.jfif', '3', 'Trong buổi hẹn hò đầu tiên ấy, anh lại ngốc nghếch chỉ biết cúi đầu xem điện thoại. Để rồi giờ đây, khi người không còn bên cạnh, anh mới nhận ra mình đã bỏ lỡ khoảnh khắc trân quý nhất.')">
+                    <div class="photo" style="background-image: url('image/3.jfif');"></div>
+                    <p>Buổi Date Đầu Tiên</p>
+                </div>
+
+                <div class="polaroid" onclick="openPhotoModal('image/4.jfif', '4', 'Trong ngày sinh nhật của anh, gia đình không tổ chức hay quà cáp gì cả, chỉ có em tự tay tỉ mỉ gói món quà và viết một dòng thư tay. Em biết không, đó là lúc anh hạnh phúc nhất... vì nhận ra trên đời này còn có một người trân trọng sự tồn tại của anh đến thế. Vậy mà lúc ấy anh lại quá khờ dại, không biết cách giữ chặt bàn tay đã sưởi ấm cuộc đời mình, để giờ đây chỉ còn biết ôm lấy nỗi ân hận muộn màng.')">
+                    <div class="photo" style="background-image: url('image/4.jfif');"></div>
+                    <p>Món Quà Sinh Nhật của em</p>
+                </div>
+                
+                 <div class="polaroid" onclick="openPhotoModal('image/5.jfif', '5', 'Lúc em ngủ nhìn dễ thương lắm đó :<')">
+                    <div class="photo" style="background-image: url('image/5.jfif');"></div>
+                    <p>Màn đêm</p>
+                </div>
+                
+                <div class="polaroid" onclick="openPhotoModal('image/6.jfif', '6', 'Em biết không, xa em anh thật sự dằn vặt bản thân mình. Anh chìm đắm trong những sai lầm cũ, anh phải lục lại những tin nhắn để tìm kiếm lại những kỷ niệm của hai ta, nhưng mỗi lần anh đọc lại là một lần như có muôn vàn nhát dao cứa vào lồng ngực. Hóa ra, hình phạt đáng sợ nhất không phải là sự cô đơn, mà là việc cứ mãi ôm lấy những ký ức ngọt ngào trong quá khứ để tự cào xé thực tại của chính mình. Anh tiếc nuối, anh đau đớn, nhưng bất lực nhận ra bản thân đã tự tay đánh mất người con gái duy nhất từng trân trọng anh vô điều kiện.')">
+                    <div class="photo" style="background-image: url('image/6.jfif');"></div>
+                    <p>Kỉ Niệm Đẹp</p>
+                </div>
+                
+            </div>
             
             <button class="ok-btn" style="width: 250px; margin-top: 10px; background: rgba(168, 85, 247, 0.3);" onclick="closeMemories()">Khép lại quá khứ 🥀</button>
         </div>
@@ -678,7 +645,7 @@
                 const currentHour = now.getHours();
                 const currentMinute = now.getMinutes();
                 
-                if ((currentHour === 19 && currentMinute >= 59) || currentHour > 19 || currentHour < 8) {
+                          if ((currentHour === 19 && currentMinute >= 59) || currentHour > 19 || currentHour < 8) {
                     sendWebhookMsg("🔓 Truy cập thành công", "Người được chọn đã nhập chính xác mật khẩu và đang xem thư.", 6184055);
                     transitionScreen('login-screen', 'loading-screen');
                     startLoading();
@@ -799,14 +766,14 @@
                 textElem.textContent += currentText.charAt(charIndex);
                 container.scrollTop = container.scrollHeight; 
                 charIndex++;
-                setTimeout(typeWriterEffect, 50); 
+                setTimeout(typeWriterEffect, 1); 
             } else {
                 isTyping = false;
                 currentSegmentIndex++;
                 const btnContainer = document.getElementById("btn-container");
                 if (currentSegmentIndex < letterSegments.length) {
                     btnContainer.style.display = "block";
-                    setTimeout(() => { container.scrollTop = container.scrollHeight; }, 50);
+                    setTimeout(() => { container.scrollTop = container.scrollHeight; }, 1);
                 } else {
                     btnContainer.style.display = "none";
                     startFinale();
@@ -945,4 +912,3 @@
     </script>
 </body>
 </html>
-
